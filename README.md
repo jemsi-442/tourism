@@ -1,6 +1,11 @@
-# tourism_backend
+# tourism
 
 Tourism booking and admin dashboard project built with Django.
+
+## Repository layout
+
+- `tourism_backend/` contains the Django project
+- `tourism_backend/main/` contains the app, templates, static files, and tests
 
 ## Stack
 
@@ -12,6 +17,7 @@ Tourism booking and admin dashboard project built with Django.
 ## Local setup
 
 ```bash
+cd tourism_backend
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
@@ -36,14 +42,16 @@ For production-like environments, `DJANGO_SECRET_KEY` is required.
 ## Useful commands
 
 ```bash
+cd tourism_backend
 python3 manage.py migrate
 python3 manage.py check
 python3 manage.py test
 ```
 
-## Notes before pushing to GitHub
+## Notes
 
 - Local database files are ignored.
 - Uploaded media is ignored.
 - Python cache files are ignored.
-- Copy `.env.example` values into your shell or deployment platform settings before deploying.
+- Static photos are ignored from git tracking.
+- Copy values from `tourism_backend/.env.example` into your deployment environment before going live.

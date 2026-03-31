@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Safari - {{ site_brand_name }}</title>
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+  <link rel="stylesheet" href="{% static 'css/safari.css' %}">
+</head>
+<body>
+  <!-- Responsive Navigation Start -->
+  {% include "_marketing_nav.html" %}
+  <!-- Responsive Navigation End -->
+  <div class="dashboard-content marketing-page-offset safari-page-shell">
+    <div class="dash-section marketing-panel safari-hero-panel">
+      <h1 class="marketing-panel-title">Safari</h1>
+      <p class="marketing-copy lead center">Explore Tanzania's wild side with our safaris.</p>
+    </div>
+    {% include "_admin_posts.html" with admin_posts=admin_posts %}
+    {% include "_safari_inventory.html" with safaris=safaris %}
+    {% if not safaris %}
+    <section class="safari-parks-gallery">
+      <div class="safari-parks-shell">
+        <h2 class="safari-parks-title">Tanzania's Top National Parks</h2>
+        <div class="safari-cards">
+          <div class="safari-card">
+            <img class="safari-card-image" src="{% static 'photos/1754198755310.jpg' %}" alt="Serengeti National Park">
+            <div class="safari-card-info">
+              <h3>Serengeti National Park</h3>
+              <p>Famous for the Great Migration, endless plains, and high density of predators.</p>
+              <button class="safari-view-more-btn" onclick="openModal('serengeti')">View More</button>
+            </div>
+          </div>
+          <div class="safari-card">
+            <img class="safari-card-image" src="{% static 'photos/1754142346358.jpg' %}" alt="Ngorongoro Conservation Area">
+            <div class="safari-card-info">
+              <h3>Ngorongoro Conservation Area</h3>
+              <p>Home to the world's largest volcanic caldera and the Big Five.</p>
+              <button class="safari-view-more-btn" onclick="openModal('ngorongoro')">View More</button>
+            </div>
+          </div>
+          <div class="safari-card">
+            <img class="safari-card-image" src="{% static 'photos/1754142211114.jpg' %}" alt="Kilimanjaro National Park">
+            <div class="safari-card-info">
+              <h3>Kilimanjaro National Park</h3>
+              <p>Features Africa's highest peak, Mount Kilimanjaro, a trekker's dream.</p>
+              <button class="safari-view-more-btn" onclick="openModal('kilimanjaro')">View More</button>
+            </div>
+          </div>
+          <div class="safari-card">
+            <img class="safari-card-image" src="{% static 'photos/1754142206047.jpg' %}" alt="Tarangire National Park">
+            <div class="safari-card-info">
+              <h3>Tarangire National Park</h3>
+              <p>Known for large herds of elephants and massive baobab trees.</p>
+              <button class="safari-view-more-btn" onclick="openModal('tarangire')">View More</button>
+            </div>
+          </div>
+          <div class="safari-card">
+            <img class="safari-card-image" src="{% static 'photos/1754142197964.jpg' %}" alt="Lake Manyara National Park">
+            <div class="safari-card-info">
+              <h3>Lake Manyara National Park</h3>
+              <p>Diverse ecosystems, flamingos, and famous tree-climbing lions.</p>
+              <button class="safari-view-more-btn" onclick="openModal('manyara')">View More</button>
+            </div>
+          </div>
+          <div class="safari-card">
+            <img class="safari-card-image" src="{% static 'photos/1754142185126.jpg' %}" alt="Selous Game Reserve">
+            <div class="safari-card-info">
+              <h3>Selous Game Reserve</h3>
+              <p>One of the largest faunal reserves, offering classic game drives and boat safaris.</p>
+              <button class="safari-view-more-btn" onclick="openModal('selous')">View More</button>
+            </div>
+          </div>
+          <div class="safari-card">
+            <img class="safari-card-image" src="{% static 'photos/1754142180186.jpg' %}" alt="Ruaha National Park">
+            <div class="safari-card-info">
+              <h3>Ruaha National Park</h3>
+              <p>Rugged landscape, large elephant population, and rare predators.</p>
+              <button class="safari-view-more-btn" onclick="openModal('ruaha')">View More</button>
+            </div>
+          </div>
+          <div class="safari-card">
+            <img class="safari-card-image" src="{% static 'photos/1754141823866.jpg' %}" alt="Katavi National Park">
+            <div class="safari-card-info">
+              <h3>Katavi National Park</h3>
+              <p>Remote, untouched wilderness with massive herds of buffalo and hippos.</p>
+              <button class="safari-view-more-btn" onclick="openModal('katavi')">View More</button>
+            </div>
+          </div>
+          <div class="safari-card">
+            <img class="safari-card-image" src="{% static 'photos/1000026398.jpg' %}" alt="Mikumi National Park">
+            <div class="safari-card-info">
+              <h3>Mikumi National Park</h3>
+              <p>Accessible from Dar es Salaam, excellent for seeing lions, giraffes, and elephants.</p>
+              <button class="safari-view-more-btn" onclick="openModal('mikumi')">View More</button>
+            </div>
+          </div>
+          <div class="safari-card">
+            <img class="safari-card-image" src="{% static 'photos/0c01917b25a0d517a113221b8b618bdc.jpg' %}" alt="Kitulo National Park">
+            <div class="safari-card-info">
+              <h3>Kitulo National Park</h3>
+              <p>The "Serengeti of Flowers"—a botanical marvel with orchids and wildflowers.</p>
+              <button class="safari-view-more-btn" onclick="openModal('kitulo')">View More</button>
+            </div>
+          </div>
+        </div>
+        <div class="safari-cta-wrap">
+          <a href="#" class="safari-cta-link">View More</a>
+        </div>
+      </div>
+
+      <div id="park-modal" class="safari-modal">
+        <div class="safari-modal-content">
+          <button class="safari-modal-close" type="button" onclick="closeModal()">&times;</button>
+          <div id="modal-details" class="safari-modal-details"></div>
+        </div>
+      </div>
+    </section>
+    {% endif %}
+    <!-- Mainland Tanzania — Attractions & What They’re Known For -->
+  </div>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  {% include "_site_footer.html" %}
+  <script src="{% static 'js/marketing-nav.js' %}"></script>
+  {% if not safaris %}
+  <script src="{% static 'js/safari.js' %}"></script>
+  {% endif %}
+
+</body>
+</html>

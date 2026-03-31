@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotel - {{ site_brand_name }}</title>
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+  <link rel="stylesheet" href="{% static 'css/hotel.css' %}">
+</head>
+<body>
+  <!-- Responsive Navigation Start -->
+  {% include "_marketing_nav.html" %}
+  <!-- Responsive Navigation End -->
+  <div class="dashboard-content marketing-page-offset hotel-page-shell">
+    {% include "_admin_posts.html" with admin_posts=admin_posts %}
+    {% include "_hotel_inventory.html" with hotels=hotels %}
+
+    {% if not hotels %}
+    <div id="hotel-success" class="hotel-success-toast"></div>
+    <h1 class="hotel-fallback-title">Top Hotels & Lodges</h1>
+    <div class="hotel-filter-bar">
+      <button class="filter-btn hotel-filter-btn" onclick="filterHotels('tanzania')">Tanzania Safari Lodges</button>
+      <button class="filter-btn hotel-filter-btn" onclick="filterHotels('zanzibar')">Zanzibar Beach Hotels</button>
+    </div>
+    <div class="hotel-cards" id="hotel-cards">
+      <!-- Tanzania Hotels -->
+      <div class="hotel-card tanzania">
+        <img class="hotel-card-image" src="{% static 'photos/1754142346358.jpg' %}" alt="&Beyond Ngorongoro Crater Lodge">
+        <div class="hotel-card-body">
+          <h3 class="hotel-card-title">&Beyond Ngorongoro Crater Lodge</h3>
+          <button class="hotel-view-more-btn" onclick="showHotelModal('ngorongoro')">View More</button>
+        </div>
+      </div>
+      <div class="hotel-card tanzania">
+        <img class="hotel-card-image" src="{% static 'photos/1754198755310.jpg' %}" alt="Four Seasons Safari Lodge Serengeti">
+        <div class="hotel-card-body">
+          <h3 class="hotel-card-title">Four Seasons Safari Lodge Serengeti</h3>
+          <button class="hotel-view-more-btn" onclick="showHotelModal('fourseasons')">View More</button>
+        </div>
+      </div>
+      <div class="hotel-card tanzania">
+        <img class="hotel-card-image" src="{% static 'photos/1754198753329.jpg' %}" alt="Serengeti Serena Safari Lodge">
+        <div class="hotel-card-body">
+          <h3 class="hotel-card-title">Serengeti Serena Safari Lodge</h3>
+          <button class="hotel-view-more-btn" onclick="showHotelModal('serena')">View More</button>
+        </div>
+      </div>
+      <div class="hotel-card tanzania">
+        <img class="hotel-card-image" src="{% static 'photos/1754142185126.jpg' %}" alt="Tarangire Treetops">
+        <div class="hotel-card-body">
+          <h3 class="hotel-card-title">Tarangire Treetops</h3>
+          <button class="hotel-view-more-btn" onclick="showHotelModal('treetops')">View More</button>
+        </div>
+      </div>
+      <div class="hotel-card tanzania">
+        <img class="hotel-card-image" src="{% static 'photos/1754142180186.jpg' %}" alt="Greystoke Mahale">
+        <div class="hotel-card-body">
+          <h3 class="hotel-card-title">Greystoke Mahale</h3>
+          <button class="hotel-view-more-btn" onclick="showHotelModal('greystoke')">View More</button>
+        </div>
+      </div>
+      <!-- Zanzibar Hotels -->
+      <div class="hotel-card zanzibar hotel-card-hidden">
+        <img class="hotel-card-image" src="{% static 'photos/1754142211114.jpg' %}" alt="Park Hyatt Zanzibar">
+        <div class="hotel-card-body">
+          <h3 class="hotel-card-title">Park Hyatt Zanzibar</h3>
+          <button class="hotel-view-more-btn" onclick="showHotelModal('hyatt')">View More</button>
+        </div>
+      </div>
+      <div class="hotel-card zanzibar hotel-card-hidden">
+        <img class="hotel-card-image" src="{% static 'photos/1754142206047.jpg' %}" alt="The Z Hotel Nungwi">
+        <div class="hotel-card-body">
+          <h3 class="hotel-card-title">The Z Hotel Nungwi</h3>
+          <button class="hotel-view-more-btn" onclick="showHotelModal('zhotel')">View More</button>
+        </div>
+      </div>
+      <div class="hotel-card zanzibar hotel-card-hidden">
+        <img class="hotel-card-image" src="{% static 'photos/1754142197964.jpg' %}" alt="Baraza Resort & Spa">
+        <div class="hotel-card-body">
+          <h3 class="hotel-card-title">Baraza Resort & Spa</h3>
+          <button class="hotel-view-more-btn" onclick="showHotelModal('baraza')">View More</button>
+        </div>
+      </div>
+      <div class="hotel-card zanzibar hotel-card-hidden">
+        <img class="hotel-card-image" src="{% static 'photos/1754142185126.jpg' %}" alt="Mnemba Island Lodge">
+        <div class="hotel-card-body">
+          <h3 class="hotel-card-title">Mnemba Island Lodge</h3>
+          <button class="hotel-view-more-btn" onclick="showHotelModal('mnemba')">View More</button>
+        </div>
+      </div>
+      <div class="hotel-card zanzibar hotel-card-hidden">
+        <img class="hotel-card-image" src="{% static 'photos/1754141823866.jpg' %}" alt="Emerson Spice Hotel">
+        <div class="hotel-card-body">
+          <h3 class="hotel-card-title">Emerson Spice Hotel</h3>
+          <button class="hotel-view-more-btn" onclick="showHotelModal('emerson')">View More</button>
+        </div>
+      </div>
+    </div>
+    <!-- Modal for hotel details -->
+    <div id="hotel-modal" class="hotel-modal">
+      <div class="hotel-modal-content">
+        <button class="hotel-modal-close" onclick="closeHotelModal()">&times;</button>
+        <div id="hotel-modal-details" class="hotel-modal-details"></div>
+      </div>
+    </div>
+    <script src="{% static 'js/hotel.js' %}"></script>
+    {% endif %}
+  </div>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  {% include "_site_footer.html" %}
+  <script src="{% static 'js/marketing-nav.js' %}"></script>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+{% if safaris %}
+  <section class="inventory-section">
+    <h2 class="inventory-title">Featured Safari Experiences</h2>
+    <div class="inventory-grid">
+      {% for safari in safaris %}
+        <article class="inventory-card">
+          {% if safari.photo %}
+            <img src="{{ safari.photo.url }}" alt="{{ safari.name }}" class="inventory-image">
+          {% endif %}
+          <h3 class="inventory-name">{{ safari.name }}</h3>
+          <p class="inventory-meta"><strong>Location:</strong> {{ safari.location }}</p>
+          <p class="inventory-description">{{ safari.description }}</p>
+          <p class="inventory-price">From {{ safari.price_per_person }} per person</p>
+          <a href="{% url 'book' %}" class="inventory-cta">Book This Safari</a>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}

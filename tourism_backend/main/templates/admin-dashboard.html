@@ -1,0 +1,666 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard</title>
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body class="admin-dashboard-page">
+<div class="admin-shell">
+  <header class="admin-hero">
+    <div>
+      <p class="admin-eyebrow">Tourism Control Center</p>
+      <h1 class="admin-title">Admin Dashboard</h1>
+      <p class="admin-subtitle">Manage content, inventory, and incoming bookings from one place.</p>
+      <div class="admin-hero-alerts">
+        <a class="admin-hero-alert-pill" href="{% url 'admin_dashboard' %}?booking_status=new#booking-section">
+          <span>New bookings</span>
+          <strong>{{ new_booking_total }}</strong>
+        </a>
+        <a class="admin-hero-alert-pill" href="{% url 'admin_dashboard' %}?inquiry_status=new#inquiry-section">
+          <span>New inquiries</span>
+          <strong>{{ new_inquiry_total }}</strong>
+        </a>
+      </div>
+    </div>
+    <div class="admin-hero-actions">
+      <a class="admin-hero-link" href="{% url 'home' %}">View site</a>
+      <form method="post" action="{% url 'admin_logout' %}" class="admin-hero-form">
+        {% csrf_token %}
+        <button class="admin-hero-link accent" type="submit">Logout</button>
+      </form>
+    </div>
+  </header>
+
+  {% if messages %}
+    <ul class="message-list">
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <section class="admin-stats">
+    <article class="admin-stat-card">
+      <span class="admin-stat-label">Users</span>
+      <strong class="admin-stat-value">{{ user_total }}</strong>
+    </article>
+    <article class="admin-stat-card">
+      <span class="admin-stat-label">Posts</span>
+      <strong class="admin-stat-value">{{ posts|length }}</strong>
+    </article>
+    <article class="admin-stat-card">
+      <span class="admin-stat-label">Packages</span>
+      <strong class="admin-stat-value">{{ packages|length }}</strong>
+    </article>
+    <article class="admin-stat-card">
+      <span class="admin-stat-label">Inventory</span>
+      <strong class="admin-stat-value">{{ inventory_total }}</strong>
+    </article>
+    <article class="admin-stat-card">
+      <span class="admin-stat-label">Bookings</span>
+      <strong class="admin-stat-value">{{ booking_total }}</strong>
+    </article>
+    <article class="admin-stat-card inquiry">
+      <span class="admin-stat-label">Inquiries</span>
+      <strong class="admin-stat-value">{{ inquiry_total }}</strong>
+    </article>
+    <article class="admin-stat-card spotlight">
+      <span class="admin-stat-label">New Bookings</span>
+      <strong class="admin-stat-value">{{ new_booking_total }}</strong>
+    </article>
+    <article class="admin-stat-card spotlight">
+      <span class="admin-stat-label">Confirmed Bookings</span>
+      <strong class="admin-stat-value">{{ confirmed_booking_total }}</strong>
+    </article>
+    <article class="admin-stat-card spotlight">
+      <span class="admin-stat-label">New Inquiries</span>
+      <strong class="admin-stat-value">{{ new_inquiry_total }}</strong>
+    </article>
+    <article class="admin-stat-card spotlight">
+      <span class="admin-stat-label">Resolved Inquiries</span>
+      <strong class="admin-stat-value">{{ resolved_inquiry_total }}</strong>
+    </article>
+  </section>
+
+  <section class="admin-quick-actions-card">
+    <div class="admin-section-header">
+      <div>
+        <p class="admin-section-kicker">Focus</p>
+        <h2>Quick Actions</h2>
+        <p>Jump straight into the items that usually need attention first.</p>
+      </div>
+    </div>
+    <div class="admin-quick-actions-grid">
+      <a class="admin-quick-action" href="{% url 'admin_dashboard' %}?booking_status=new#booking-section">
+        <span class="admin-quick-action-label">Review New Bookings</span>
+        <strong class="admin-quick-action-value">{{ new_booking_total }}</strong>
+      </a>
+      <a class="admin-quick-action" href="{% url 'admin_dashboard' %}?booking_status=confirmed#booking-section">
+        <span class="admin-quick-action-label">View Confirmed Trips</span>
+        <strong class="admin-quick-action-value">{{ confirmed_booking_total }}</strong>
+      </a>
+      <a class="admin-quick-action" href="{% url 'admin_dashboard' %}?inquiry_status=new#inquiry-section">
+        <span class="admin-quick-action-label">Reply to New Inquiries</span>
+        <strong class="admin-quick-action-value">{{ new_inquiry_total }}</strong>
+      </a>
+      <a class="admin-quick-action" href="{% url 'export_bookings_csv' %}">
+        <span class="admin-quick-action-label">Download Bookings CSV</span>
+        <strong class="admin-quick-action-value">CSV</strong>
+      </a>
+      <a class="admin-quick-action" href="{% url 'admin_dashboard' %}?booking_visibility=archived#booking-section">
+        <span class="admin-quick-action-label">View Archived Bookings</span>
+        <strong class="admin-quick-action-value">{{ archived_booking_total }}</strong>
+      </a>
+    </div>
+  </section>
+
+  <section class="admin-chart-grid">
+    <article class="admin-chart-card">
+      <div class="admin-section-header">
+        <div>
+          <p class="admin-section-kicker">Overview</p>
+          <h2>Booking Status Overview</h2>
+          <p>See how booking requests are currently distributed.</p>
+        </div>
+      </div>
+      <div class="admin-chart-list">
+        {% for item in booking_status_chart %}
+          <div class="admin-chart-row">
+            <div class="admin-chart-meta">
+              <span class="admin-chart-label">{{ item.label }}</span>
+              <strong class="admin-chart-count">{{ item.count }}</strong>
+            </div>
+            <div class="admin-chart-track">
+              <span class="admin-chart-bar status-{{ item.value }}" style="width: {{ item.width }}%;"></span>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </article>
+
+    <article class="admin-chart-card">
+      <div class="admin-section-header">
+        <div>
+          <p class="admin-section-kicker">Overview</p>
+          <h2>Inquiry Status Overview</h2>
+          <p>Quick view of where contact follow-up currently stands.</p>
+        </div>
+      </div>
+      <div class="admin-chart-list">
+        {% for item in inquiry_status_chart %}
+          <div class="admin-chart-row">
+            <div class="admin-chart-meta">
+              <span class="admin-chart-label">{{ item.label }}</span>
+              <strong class="admin-chart-count">{{ item.count }}</strong>
+            </div>
+            <div class="admin-chart-track">
+              <span class="admin-chart-bar status-{{ item.value }}" style="width: {{ item.width }}%;"></span>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </article>
+  </section>
+
+  <section id="activity-section" class="admin-section-card admin-activity-card">
+    <div class="admin-section-header">
+      <div>
+        <p class="admin-section-kicker">Live Feed</p>
+        <h2>Recent Activity</h2>
+        <p>See the latest movement across content, bookings, and contact requests.</p>
+      </div>
+    </div>
+    <div class="admin-activity-list">
+      {% for item in recent_activity %}
+        <article class="admin-activity-item">
+          <div class="admin-activity-badge-wrap">
+            <span class="admin-activity-badge kind-{{ item.kind }}">{{ item.kind_label }}</span>
+          </div>
+          <div class="admin-activity-content">
+            <div class="admin-activity-topline">
+              <h3>{{ item.title }}</h3>
+              <time datetime="{{ item.timestamp|date:'c' }}">{{ item.timestamp|date:"Y-m-d H:i" }}</time>
+            </div>
+            <p>{{ item.detail }}</p>
+          </div>
+        </article>
+      {% empty %}
+        <p class="admin-empty-state">Recent activity will appear here as soon as new content, bookings, or inquiries arrive.</p>
+      {% endfor %}
+    </div>
+  </section>
+
+  <nav class="admin-section-nav">
+    <a href="#activity-section">Recent Activity</a>
+    {% if can_manage_users %}
+      <a href="#user-section">Users</a>
+    {% endif %}
+    <a href="#post-section">Content</a>
+    <a href="#package-section">Packages</a>
+    <a href="#hotel-section">Hotels</a>
+    <a href="#safari-section">Safaris</a>
+    <a href="#transport-section">Transport</a>
+    <a href="#booking-section">Bookings <span class="admin-nav-badge">{{ new_booking_total }}</span></a>
+    <a href="#inquiry-section">Inquiries <span class="admin-nav-badge">{{ new_inquiry_total }}</span></a>
+  </nav>
+
+  {% if can_manage_users %}
+    <section id="user-section" class="admin-section-card">
+      <div class="admin-section-header">
+        <div>
+          <p class="admin-section-kicker">Access</p>
+          <h2>Users</h2>
+          <p>Create additional dashboard logins for your team.</p>
+        </div>
+      </div>
+      <form class="admin-form-card" method="post" action="{% url 'add_dashboard_user' %}">
+        {% csrf_token %}
+        {% include "_admin_form_fields.html" with form=user_form %}
+        <button class="admin-primary-btn" type="submit">Add Team Login</button>
+      </form>
+
+      <div class="admin-record-grid">
+        {% for dashboard_user in users %}
+          <article class="admin-record-card">
+            <h4>{{ dashboard_user.username }}</h4>
+            <p class="admin-record-tag">{% if dashboard_user.is_superuser %}Superuser{% else %}Staff user{% endif %}</p>
+            <p>{{ dashboard_user.email|default:"No email added yet." }}</p>
+          </article>
+        {% empty %}
+          <p class="admin-empty-state">No team logins yet. Use the form above to add the first one.</p>
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+
+  <section id="post-section" class="admin-section-card">
+    <div class="admin-section-header">
+      <div>
+        <p class="admin-section-kicker">Publishing</p>
+        <h2>Site Content</h2>
+        <p>Create and update marketing posts that appear across the site.</p>
+      </div>
+    </div>
+    <form class="admin-form-card" method="post" enctype="multipart/form-data" action="{% url 'add_post' %}">
+      {% csrf_token %}
+      {% include "_admin_form_fields.html" with form=post_form %}
+      <button class="admin-primary-btn" type="submit">Add Site Post</button>
+    </form>
+
+    <h3 class="admin-subsection-title">All Posts</h3>
+    <div class="admin-record-grid">
+      {% for post in posts %}
+        <article class="admin-record-card">
+          <h4>{{ post.title }}</h4>
+          <p class="admin-record-tag">{{ post.target_page }}</p>
+          <p>{{ post.description }}</p>
+          {% if post.photo %}
+            <img class="admin-record-image" src="{{ post.photo.url }}" alt="{{ post.title }}">
+          {% endif %}
+          <div class="admin-record-actions">
+            <a class="admin-secondary-btn" href="{% url 'edit_post' post.id %}">Edit</a>
+            <form method="post" action="{% url 'delete_post' post.id %}" class="admin-inline-form">
+              {% csrf_token %}
+              <button class="admin-danger-btn" type="submit">Delete</button>
+            </form>
+          </div>
+        </article>
+      {% empty %}
+        <p class="admin-empty-state">No site posts yet. Use the form above to publish the first one.</p>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section id="package-section" class="admin-section-card">
+    <div class="admin-section-header">
+      <div>
+        <p class="admin-section-kicker">Inventory</p>
+        <h2>Packages</h2>
+        <p>Add and maintain package options used on the public site.</p>
+      </div>
+    </div>
+    <form class="admin-form-card" method="post" enctype="multipart/form-data" action="{% url 'add_package' %}">
+      {% csrf_token %}
+      {% include "_admin_form_fields.html" with form=package_form %}
+      <button class="admin-primary-btn" type="submit">Save Package</button>
+    </form>
+
+    <div class="admin-record-grid">
+      {% for package in packages %}
+        <article class="admin-record-card">
+          <h4>{{ package.name }}</h4>
+          <p>{{ package.description }}</p>
+          <p class="admin-record-price">Price: {{ package.price }}</p>
+          {% if package.photo %}
+            <img class="admin-record-image" src="{{ package.photo.url }}" alt="{{ package.name }}">
+          {% endif %}
+          <div class="admin-record-actions">
+            <a class="admin-secondary-btn" href="{% url 'edit_package' package.id %}">Edit</a>
+            <form method="post" action="{% url 'delete_package' package.id %}" class="admin-inline-form" data-confirm-action="Archive Package" data-confirm-message="Archive this package and hide it from the active site?">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{ current_dashboard_path }}">
+              <button class="admin-danger-btn" type="submit">Archive</button>
+            </form>
+          </div>
+        </article>
+      {% empty %}
+        <p class="admin-empty-state">No packages yet. Use the form above to add the first one.</p>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section id="hotel-section" class="admin-section-card">
+    <div class="admin-section-header">
+      <div>
+        <p class="admin-section-kicker">Inventory</p>
+        <h2>Hotels</h2>
+        <p>Maintain hotel inventory used in the booking form and public page.</p>
+      </div>
+    </div>
+    <form class="admin-form-card" method="post" enctype="multipart/form-data" action="{% url 'add_hotel' %}">
+      {% csrf_token %}
+      {% include "_admin_form_fields.html" with form=hotel_form %}
+      <button class="admin-primary-btn" type="submit">Save Hotel</button>
+    </form>
+
+    <div class="admin-record-grid">
+      {% for hotel in hotels %}
+        <article class="admin-record-card">
+          <h4>{{ hotel.name }}</h4>
+          <p class="admin-record-tag">{{ hotel.location }}</p>
+          <p>{{ hotel.description }}</p>
+          <p class="admin-record-price">Price per night: {{ hotel.price_per_night }}</p>
+          {% if hotel.photo %}
+            <img class="admin-record-image" src="{{ hotel.photo.url }}" alt="{{ hotel.name }}">
+          {% endif %}
+          <div class="admin-record-actions">
+            <a class="admin-secondary-btn" href="{% url 'edit_hotel' hotel.id %}">Edit</a>
+            <form method="post" action="{% url 'delete_hotel' hotel.id %}" class="admin-inline-form" data-confirm-action="Archive Hotel" data-confirm-message="Archive this hotel and hide it from the active site?">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{ current_dashboard_path }}">
+              <button class="admin-danger-btn" type="submit">Archive</button>
+            </form>
+          </div>
+        </article>
+      {% empty %}
+        <p class="admin-empty-state">No hotels yet. Use the form above to add the first stay option.</p>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section id="safari-section" class="admin-section-card">
+    <div class="admin-section-header">
+      <div>
+        <p class="admin-section-kicker">Inventory</p>
+        <h2>Safaris</h2>
+        <p>Control safari listings and keep pricing current for travelers.</p>
+      </div>
+    </div>
+    <form class="admin-form-card" method="post" enctype="multipart/form-data" action="{% url 'add_safari' %}">
+      {% csrf_token %}
+      {% include "_admin_form_fields.html" with form=safari_form %}
+      <button class="admin-primary-btn" type="submit">Save Safari</button>
+    </form>
+
+    <div class="admin-record-grid">
+      {% for safari in safaris %}
+        <article class="admin-record-card">
+          <h4>{{ safari.name }}</h4>
+          <p class="admin-record-tag">{{ safari.location }}</p>
+          <p>{{ safari.description }}</p>
+          <p class="admin-record-price">Price per person: {{ safari.price_per_person }}</p>
+          {% if safari.photo %}
+            <img class="admin-record-image" src="{{ safari.photo.url }}" alt="{{ safari.name }}">
+          {% endif %}
+          <div class="admin-record-actions">
+            <a class="admin-secondary-btn" href="{% url 'edit_safari' safari.id %}">Edit</a>
+            <form method="post" action="{% url 'delete_safari' safari.id %}" class="admin-inline-form" data-confirm-action="Archive Safari" data-confirm-message="Archive this safari and hide it from the active site?">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{ current_dashboard_path }}">
+              <button class="admin-danger-btn" type="submit">Archive</button>
+            </form>
+          </div>
+        </article>
+      {% empty %}
+        <p class="admin-empty-state">No safaris yet. Use the form above to add the first experience.</p>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section id="transport-section" class="admin-section-card">
+    <div class="admin-section-header">
+      <div>
+        <p class="admin-section-kicker">Inventory</p>
+        <h2>Transport</h2>
+        <p>Manage transfers and day transport options for guests.</p>
+      </div>
+    </div>
+    <form class="admin-form-card" method="post" enctype="multipart/form-data" action="{% url 'add_transport' %}">
+      {% csrf_token %}
+      {% include "_admin_form_fields.html" with form=transport_form %}
+      <button class="admin-primary-btn" type="submit">Save Transport</button>
+    </form>
+
+    <div class="admin-record-grid">
+      {% for transport in transports %}
+        <article class="admin-record-card">
+          <h4>{{ transport.name }}</h4>
+          <p class="admin-record-tag">{{ transport.type }}</p>
+          <p>{{ transport.description }}</p>
+          <p class="admin-record-price">Price per day: {{ transport.price_per_day }}</p>
+          {% if transport.photo %}
+            <img class="admin-record-image" src="{{ transport.photo.url }}" alt="{{ transport.name }}">
+          {% endif %}
+          <div class="admin-record-actions">
+            <a class="admin-secondary-btn" href="{% url 'edit_transport' transport.id %}">Edit</a>
+            <form method="post" action="{% url 'delete_transport' transport.id %}" class="admin-inline-form" data-confirm-action="Archive Transport" data-confirm-message="Archive this transport option and hide it from the active site?">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{ current_dashboard_path }}">
+              <button class="admin-danger-btn" type="submit">Archive</button>
+            </form>
+          </div>
+        </article>
+      {% empty %}
+        <p class="admin-empty-state">No transport options yet. Use the form above to add the first one.</p>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section id="booking-section" class="admin-section-card">
+    <div class="admin-section-header">
+      <div>
+        <p class="admin-section-kicker">Guests</p>
+        <h2>{% if booking_visibility == "archived" %}Archived Bookings{% else %}All Bookings{% endif %}</h2>
+        <p>{% if booking_visibility == "archived" %}Review archived booking records or restore them to the active dashboard.{% else %}Track customer details and the services selected in each booking.{% endif %} Showing {{ filtered_booking_count }} result{{ filtered_booking_count|pluralize }}.</p>
+      </div>
+    </div>
+    <div class="admin-filter-bar">
+      <a href="{% url 'admin_dashboard' %}?{% if booking_query %}booking_query={{ booking_query|urlencode }}{% endif %}#booking-section" class="admin-filter-chip{% if booking_visibility == 'active' and not booking_status_filter %} active{% endif %}">All</a>
+      <a href="{% url 'admin_dashboard' %}?booking_visibility=archived{% if booking_query %}&booking_query={{ booking_query|urlencode }}{% endif %}#booking-section" class="admin-filter-chip{% if booking_visibility == 'archived' %} active{% endif %}">Archived</a>
+      {% if booking_visibility == "active" %}
+      {% for value, label in booking_status_choices %}
+        <a href="{% url 'admin_dashboard' %}?booking_status={{ value }}{{ booking_query_suffix }}#booking-section" class="admin-filter-chip{% if booking_status_filter == value %} active{% endif %}">{{ label }}</a>
+      {% endfor %}
+      {% endif %}
+    </div>
+    <div class="admin-search-row">
+      <form method="get" action="{% url 'admin_dashboard' %}" class="admin-search-form">
+        {% if booking_visibility == "archived" %}
+          <input type="hidden" name="booking_visibility" value="archived">
+        {% endif %}
+        {% if booking_status_filter %}
+          <input type="hidden" name="booking_status" value="{{ booking_status_filter }}">
+        {% endif %}
+        <input type="text" name="booking_query" value="{{ booking_query }}" class="admin-search-input" placeholder="Search bookings by name, email, or phone">
+        <button type="submit" class="admin-secondary-btn">Apply Search</button>
+      </form>
+      <a class="admin-primary-btn" href="{% url 'export_bookings_csv' %}{% if booking_filter_query %}?{{ booking_filter_query }}{% endif %}">Download CSV</a>
+    </div>
+    <div class="admin-table-wrap">
+      <table class="admin-bookings-table">
+        <thead>
+          <tr>
+            <th>Name</th><th>Email</th><th>Phone</th><th>Package</th><th>Hotel</th><th>Safari</th><th>Transport</th><th>Date</th><th>Status</th><th>Update</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for b in bookings %}
+          <tr>
+            <td data-label="Name">{{ b.full_name }}</td>
+            <td data-label="Email">{{ b.email }}</td>
+            <td data-label="Phone">{{ b.phone }}</td>
+            <td data-label="Package">{{ b.package.name|default:"-" }}</td>
+            <td data-label="Hotel">{{ b.hotel.name|default:"-" }}</td>
+            <td data-label="Safari">{{ b.safari.name|default:"-" }}</td>
+            <td data-label="Transport">{{ b.transport.name|default:"-" }}</td>
+            <td data-label="Date">{{ b.booking_date }}</td>
+            <td data-label="Status"><span class="admin-status-badge status-{{ b.status }}">{{ b.get_status_display }}</span></td>
+            <td data-label="Update">
+              <div class="admin-status-shortcuts">
+                {% if booking_visibility == "archived" %}
+                  <form method="post" action="{% url 'restore_booking' b.id %}" class="admin-inline-form" data-confirm-action="Restore Booking" data-confirm-message="Return this booking to the active dashboard list?">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ current_dashboard_path }}">
+                    <button class="admin-status-shortcut-btn" type="submit">Restore Booking</button>
+                  </form>
+                {% elif b.status == "new" %}
+                  <form method="post" action="{% url 'update_booking_status' b.id %}" class="admin-inline-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ current_dashboard_path }}">
+                    <input type="hidden" name="status" value="contacted">
+                    <button class="admin-status-shortcut-btn" type="submit">Mark Contacted</button>
+                  </form>
+                {% elif b.status == "contacted" %}
+                  <form method="post" action="{% url 'update_booking_status' b.id %}" class="admin-inline-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ current_dashboard_path }}">
+                    <input type="hidden" name="status" value="confirmed">
+                    <button class="admin-status-shortcut-btn" type="submit">Confirm Trip</button>
+                  </form>
+                {% elif b.status == "completed" or b.status == "cancelled" %}
+                  <form method="post" action="{% url 'delete_booking' b.id %}" class="admin-inline-form" data-confirm-action="Archive Booking" data-confirm-message="Archive this booking and move it out of the active dashboard?">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ current_dashboard_path }}">
+                    <button class="admin-status-shortcut-btn danger" type="submit">Archive Booking</button>
+                  </form>
+                {% endif %}
+              </div>
+              <form method="post" action="{% url 'update_booking_status' b.id %}" class="admin-status-form{% if booking_visibility == 'archived' %} is-hidden{% endif %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ current_dashboard_path }}">
+                <select name="status" class="admin-status-select">
+                  {% for value, label in b.STATUS_CHOICES %}
+                    <option value="{{ value }}"{% if b.status == value %} selected{% endif %}>{{ label }}</option>
+                  {% endfor %}
+                </select>
+                <button class="admin-secondary-btn" type="submit">Update Status</button>
+              </form>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="10">{% if booking_visibility == "archived" %}No archived bookings yet. Archived records will show up here after you archive one.{% else %}No bookings yet. New customer requests will appear here automatically.{% endif %}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if bookings.paginator.num_pages > 1 %}
+      <nav class="admin-pagination" aria-label="Bookings pagination">
+        {% if bookings.has_previous %}
+          <a class="admin-pagination-link" href="{% url 'admin_dashboard' %}?{% if booking_filter_query %}{{ booking_filter_query }}&{% endif %}booking_page={{ bookings.previous_page_number }}#booking-section">Previous</a>
+        {% endif %}
+        <span class="admin-pagination-current">Page {{ bookings.number }} of {{ bookings.paginator.num_pages }}</span>
+        {% if bookings.has_next %}
+          <a class="admin-pagination-link" href="{% url 'admin_dashboard' %}?{% if booking_filter_query %}{{ booking_filter_query }}&{% endif %}booking_page={{ bookings.next_page_number }}#booking-section">Next</a>
+        {% endif %}
+      </nav>
+    {% endif %}
+  </section>
+
+  <section id="inquiry-section" class="admin-section-card">
+    <div class="admin-section-header">
+      <div>
+        <p class="admin-section-kicker">Guests</p>
+        <h2>{% if inquiry_visibility == "archived" %}Archived Inquiries{% else %}Contact Inquiries{% endif %}</h2>
+        <p>{% if inquiry_visibility == "archived" %}Review archived inquiry records or restore them to the active dashboard.{% else %}Review trip inquiries submitted from the public contact form.{% endif %} Showing {{ filtered_inquiry_count }} result{{ filtered_inquiry_count|pluralize }}.</p>
+      </div>
+    </div>
+    <div class="admin-filter-bar">
+      <a href="{% url 'admin_dashboard' %}?{% if inquiry_query %}inquiry_query={{ inquiry_query|urlencode }}{% endif %}#inquiry-section" class="admin-filter-chip{% if inquiry_visibility == 'active' and not inquiry_status_filter %} active{% endif %}">All</a>
+      <a href="{% url 'admin_dashboard' %}?inquiry_visibility=archived{% if inquiry_query %}&inquiry_query={{ inquiry_query|urlencode }}{% endif %}#inquiry-section" class="admin-filter-chip{% if inquiry_visibility == 'archived' %} active{% endif %}">Archived</a>
+      {% if inquiry_visibility == "active" %}
+      {% for value, label in inquiry_status_choices %}
+        <a href="{% url 'admin_dashboard' %}?inquiry_status={{ value }}{{ inquiry_query_suffix }}#inquiry-section" class="admin-filter-chip{% if inquiry_status_filter == value %} active{% endif %}">{{ label }}</a>
+      {% endfor %}
+      {% endif %}
+    </div>
+    <div class="admin-search-row">
+      <form method="get" action="{% url 'admin_dashboard' %}" class="admin-search-form">
+        {% if inquiry_visibility == "archived" %}
+          <input type="hidden" name="inquiry_visibility" value="archived">
+        {% endif %}
+        {% if inquiry_status_filter %}
+          <input type="hidden" name="inquiry_status" value="{{ inquiry_status_filter }}">
+        {% endif %}
+        <input type="text" name="inquiry_query" value="{{ inquiry_query }}" class="admin-search-input" placeholder="Search inquiries by name, email, or phone">
+        <button type="submit" class="admin-secondary-btn">Apply Search</button>
+      </form>
+      <a class="admin-primary-btn" href="{% url 'export_inquiries_csv' %}{% if inquiry_filter_query %}?{{ inquiry_filter_query }}{% endif %}">Download CSV</a>
+    </div>
+    <div class="admin-table-wrap">
+      <table class="admin-bookings-table">
+        <thead>
+          <tr>
+            <th>Name</th><th>Email</th><th>Phone</th><th>Preferred Reply</th><th>Status</th><th>Message</th><th>Received</th><th>Update</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for inquiry in inquiries %}
+          <tr>
+            <td data-label="Name">{{ inquiry.full_name }}</td>
+            <td data-label="Email">{{ inquiry.email }}</td>
+            <td data-label="Phone">{{ inquiry.phone }}</td>
+            <td data-label="Preferred Reply">{{ inquiry.get_preferred_channel_display }}</td>
+            <td data-label="Status"><span class="admin-status-badge status-{{ inquiry.status }}">{{ inquiry.get_status_display }}</span></td>
+            <td data-label="Message">{{ inquiry.message }}</td>
+            <td data-label="Received">{{ inquiry.created_at|date:"Y-m-d H:i" }}</td>
+            <td data-label="Update">
+              <div class="admin-status-shortcuts">
+                {% if inquiry_visibility == "archived" %}
+                  <form method="post" action="{% url 'restore_inquiry' inquiry.id %}" class="admin-inline-form" data-confirm-action="Restore Inquiry" data-confirm-message="Return this inquiry to the active dashboard list?">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ current_dashboard_path }}">
+                    <button class="admin-status-shortcut-btn" type="submit">Restore Inquiry</button>
+                  </form>
+                {% elif inquiry.status == "new" %}
+                  <form method="post" action="{% url 'update_inquiry_status' inquiry.id %}" class="admin-inline-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ current_dashboard_path }}">
+                    <input type="hidden" name="status" value="contacted">
+                    <button class="admin-status-shortcut-btn" type="submit">Mark Contacted</button>
+                  </form>
+                {% elif inquiry.status == "contacted" %}
+                  <form method="post" action="{% url 'update_inquiry_status' inquiry.id %}" class="admin-inline-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ current_dashboard_path }}">
+                    <input type="hidden" name="status" value="resolved">
+                    <button class="admin-status-shortcut-btn" type="submit">Resolve</button>
+                  </form>
+                {% elif inquiry.status == "resolved" %}
+                  <form method="post" action="{% url 'delete_inquiry' inquiry.id %}" class="admin-inline-form" data-confirm-action="Archive Inquiry" data-confirm-message="Archive this inquiry and move it out of the active dashboard?">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ current_dashboard_path }}">
+                    <button class="admin-status-shortcut-btn danger" type="submit">Archive Inquiry</button>
+                  </form>
+                {% endif %}
+              </div>
+              <form method="post" action="{% url 'update_inquiry_status' inquiry.id %}" class="admin-status-form{% if inquiry_visibility == 'archived' %} is-hidden{% endif %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ current_dashboard_path }}">
+                <select name="status" class="admin-status-select">
+                  {% for value, label in inquiry.STATUS_CHOICES %}
+                    <option value="{{ value }}"{% if inquiry.status == value %} selected{% endif %}>{{ label }}</option>
+                  {% endfor %}
+                </select>
+                <button class="admin-secondary-btn" type="submit">Update Status</button>
+              </form>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="8">{% if inquiry_visibility == "archived" %}No archived inquiries yet. Archived records will show up here after you archive one.{% else %}No inquiries yet. New contact messages will appear here automatically.{% endif %}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% if inquiries.paginator.num_pages > 1 %}
+      <nav class="admin-pagination" aria-label="Inquiries pagination">
+        {% if inquiries.has_previous %}
+          <a class="admin-pagination-link" href="{% url 'admin_dashboard' %}?{% if inquiry_filter_query %}{{ inquiry_filter_query }}&{% endif %}inquiry_page={{ inquiries.previous_page_number }}#inquiry-section">Previous</a>
+        {% endif %}
+        <span class="admin-pagination-current">Page {{ inquiries.number }} of {{ inquiries.paginator.num_pages }}</span>
+        {% if inquiries.has_next %}
+          <a class="admin-pagination-link" href="{% url 'admin_dashboard' %}?{% if inquiry_filter_query %}{{ inquiry_filter_query }}&{% endif %}inquiry_page={{ inquiries.next_page_number }}#inquiry-section">Next</a>
+        {% endif %}
+      </nav>
+    {% endif %}
+  </section>
+
+  {% include "_copyright_footer.html" %}
+</div>
+<div class="admin-confirm-modal" id="admin-confirm-modal" hidden>
+  <div class="admin-confirm-backdrop" data-confirm-close></div>
+  <div class="admin-confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="admin-confirm-title">
+    <p class="admin-confirm-eyebrow">Please Confirm</p>
+    <h2 id="admin-confirm-title" class="admin-confirm-title">Confirm Action</h2>
+    <p class="admin-confirm-message" id="admin-confirm-message">Are you sure you want to continue?</p>
+    <div class="admin-confirm-actions">
+      <button type="button" class="admin-secondary-btn" data-confirm-cancel>Cancel</button>
+      <button type="button" class="admin-danger-btn" data-confirm-accept>Continue</button>
+    </div>
+  </div>
+</div>
+<script src="{% static 'js/admin-dashboard.js' %}"></script>
+</body>
+</html>

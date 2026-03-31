@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Zanzibar - {{ site_brand_name }}</title>
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body>
+  <!-- Responsive Navigation Start -->
+  {% include "_marketing_nav.html" %}
+  <!-- Responsive Navigation End -->
+  <div class="dashboard-content marketing-page-offset about-zanzibar-page-shell">
+    {% include "_admin_posts.html" with admin_posts=admin_posts %}
+    <div class="dash-section marketing-panel marketing-panel-lato about-zanzibar-panel">
+      <h1 class="marketing-panel-title accent">About Zanzibar</h1>
+      <ol class="marketing-list emphasis">
+        <li><b>Early Inhabitants</b> – People from Bantu, Arab, and Persian origins settled on the islands over 2,000 years ago.</li>
+        <li><b>Trade Hub</b> – By the 8th century, Zanzibar became a center for Indian Ocean trade, famous for spices (cloves, cinnamon) and ivory.</li>
+        <li><b>Omani Arab Rule</b> – In the 17th century, the Omani Arabs took control; Stone Town flourished as a trading city.</li>
+        <li><b>Slave Trade Era</b> – Zanzibar became a key hub in the East African slave trade during the 18th and 19th centuries.</li>
+        <li><b>Sultanate of Zanzibar</b> – In 1856, Zanzibar became its own sultanate under Omani rule.</li>
+        <li><b>British Protectorate</b> – Late 19th century, Britain established a protectorate; slavery was abolished in 1897.</li>
+        <li><b>Independence & Revolution</b> – Zanzibar gained independence in 1963; a revolution in 1964 led to the Zanzibar Republic, which later united with Tanganyika to form Tanzania.</li>
+        <li><b>Modern Zanzibar</b> – Today, Zanzibar is semi-autonomous, famous for tourism, spices, and cultural heritage.</li>
+      </ol>
+      <h2 class="marketing-section-title">Popular Places and Experiences in Zanzibar</h2>
+      <div class="marketing-columns">
+        <div class="marketing-column">
+          <h3 class="marketing-column-title">Stone Town & History</h3>
+          <ul class="marketing-list dark">
+            <li>Stone Town Tour – UNESCO World Heritage site.</li>
+            <li>House of Wonders (Beit al-Ajaib)</li>
+            <li>Old Fort (Ngome Kongwe)</li>
+            <li>Forodhani Night Market – Evening street food by the sea.</li>
+            <li>Darajani Market – Local food & spice market.</li>
+            <li>Palace Museum (Sultan’s Palace)</li>
+            <li>Freddie Mercury House – Birthplace of the music legend.</li>
+            <li>Slave Market & Anglican Cathedral – Learn about the slave trade history.</li>
+            <li>Maruhubi Palace Ruins</li>
+            <li>Mtoni Palace Ruins</li>
+            <li>Mbweni Ruins & Botanical Gardens</li>
+            <li>Mangapwani Slave Caves & Chambers</li>
+          </ul>
+          <h3 class="marketing-column-title">Beaches & North Coast</h3>
+          <ul class="marketing-list dark">
+            <li>Nungwi Beach – Beautiful sunsets & lively nightlife.</li>
+            <li>Kendwa Beach – Known for Full Moon parties.</li>
+            <li>Mnarani Aquarium (Nungwi Turtle Center) – Sea turtle conservation.</li>
+            <li>Kiwengwa Beach – Long, scenic beach with many resorts.</li>
+            <li>Salama Cave (Kiwengwa) – Hidden cave with natural freshwater pool for swimming.</li>
+            <li>Muyuni Beach – Secluded and quiet.</li>
+            <li>Matemwe Beach – Close to Mnemba Island, good for snorkeling.</li>
+          </ul>
+        </div>
+        <div class="marketing-column">
+          <h3 class="marketing-column-title">Islands & Water Tours</h3>
+          <ul class="marketing-list dark">
+            <li>Prison Island (Changuu Island) – Giant tortoises & history.</li>
+            <li>Nakupenda Sandbank – White sandbank in the middle of the ocean.</li>
+            <li>Mnemba Atoll – The best snorkeling and diving spot.</li>
+            <li>Chumbe Island – Marine park with coral reef conservation.</li>
+            <li>Bawe Island – Relaxing and quiet getaway.</li>
+            <li>Chapwani Island (Grave Island) – Colonial history site.</li>
+          </ul>
+          <h3 class="marketing-column-title">Nature & Eco Tours</h3>
+          <ul class="marketing-list dark">
+            <li>Spice Farms (Spice Tour) – Taste and learn about Zanzibar spices.</li>
+            <li>Jozani Forest – Home of the rare Red Colobus monkeys.</li>
+            <li>Pete Village Boardwalk – Mangrove forest walk.</li>
+            <li>Butterfly Centre (Pete) – Butterfly sanctuary.</li>
+            <li>Seaweed Center (Paje) – Learn about seaweed farming and women projects.</li>
+          </ul>
+        </div>
+        <div class="marketing-column">
+          <h3 class="marketing-column-title">South Coast & Special Spots</h3>
+          <ul class="marketing-list dark">
+            <li>Kizimkazi Dolphin Tour – Swim with dolphins.</li>
+            <li>The Rock Restaurant (Michamvi) – Iconic restaurant in the sea.</li>
+            <li>Bwejuu & Paje Beaches – Kitesurfing & water sports paradise.</li>
+            <li>Jambiani Village Tour – Experience local village life.</li>
+            <li>Makunduchi Village – Famous for Mwaka Kogwa cultural festival.</li>
+          </ul>
+          <h3 class="marketing-column-title">Unique Experiences & Activities</h3>
+          <ul class="marketing-list dark">
+            <li>Sunset Dhow Cruise – Traditional sailing boat at sunset.</li>
+            <li>Sandbank Seafood BBQ – Fresh seafood lunch on a sandbank.</li>
+            <li>Deep Sea Fishing Trips</li>
+            <li>Horse Riding (Nungwi / Paje)</li>
+            <li>Scuba Diving & Snorkeling Trips</li>
+            <li>Swahili Cooking Classes</li>
+            <li>Birthday / Honeymoon Packages</li>
+            <li>Traditional Dance Shows & Taarab Nights</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  {% include "_site_footer.html" %}
+  <script src="{% static 'js/marketing-nav.js' %}"></script>
+
+</body>
+</html>

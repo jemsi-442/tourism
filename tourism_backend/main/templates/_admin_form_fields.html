@@ -1,0 +1,35 @@
+{% if form.non_field_errors %}
+  <ul class="non-field-errors">
+    {% for error in form.non_field_errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+{% for hidden_field in form.hidden_fields %}
+  {{ hidden_field }}
+{% endfor %}
+
+<div class="admin-form-grid">
+  {% for field in form.visible_fields %}
+    <div class="admin-form-field{% if field.errors %} has-errors{% endif %}">
+      <label for="{{ field.id_for_label }}">
+        {{ field.label }}
+        {% if field.field.required %}
+          <span class="admin-form-required">*</span>
+        {% endif %}
+      </label>
+      {{ field }}
+      {% if field.help_text %}
+        <p class="admin-form-help">{{ field.help_text }}</p>
+      {% endif %}
+      {% if field.errors %}
+        <ul class="admin-form-errors">
+          {% for error in field.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>

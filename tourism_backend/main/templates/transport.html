@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transport - {{ site_brand_name }}</title>
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body>
+  <!-- Responsive Navigation Start -->
+  {% include "_marketing_nav.html" %}
+  <!-- Responsive Navigation End -->
+  
+  <div class="dashboard-content marketing-page-offset transport-page-shell">
+    <div class="dash-section marketing-panel transport-hero-panel">
+      <h1 class="marketing-panel-title">Karibu! Welcome to the Jewel of East Africa.</h1>
+      <p class="marketing-copy lead center">Your adventure in Tanzania and the spice islands of Zanzibar begins here. Explore majestic national parks, pristine beaches, and vibrant cultures at your own pace. Let us help you find the perfect vehicle for your journey.</p>
+      {% include "_admin_posts.html" with admin_posts=admin_posts %}
+    </div>
+    {% include "_transport_inventory.html" with transports=transports %}
+    {% if not transports %}
+      <p class="marketing-copy center transport-empty-state">
+        We're refreshing our transport options right now. Contact us and we will help you choose the best available transfer.
+      </p>
+    {% endif %}
+  </div>
+  
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  {% include "_site_footer.html" %}
+  <script src="{% static 'js/marketing-nav.js' %}"></script>
+
+</body>
+</html>

@@ -1,0 +1,344 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Lato", Arial, sans-serif;
+  background: linear-gradient(180deg, #fff8e1 0%, #f6fbf7 100%);
+  color: #173320;
+  overflow-x: hidden;
+}
+
+.hero {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 3rem 1.2rem 1.5rem;
+}
+
+.hero-card {
+  position: relative;
+  overflow: hidden;
+  padding: 2.3rem;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #14532d, #1f8a47);
+  box-shadow: 0 18px 40px rgba(20, 83, 45, 0.18);
+  color: #fff;
+  animation: public-rise 0.65s ease both;
+}
+
+.hero-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 24%, rgba(255, 255, 255, 0.2), transparent 22%),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0) 46%);
+  pointer-events: none;
+}
+
+.hero-card h1 {
+  margin: 0 0 0.7rem;
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.hero-card p {
+  max-width: 700px;
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.content {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 1.2rem 3rem;
+}
+
+.booking-shell {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.panel,
+.info-card {
+  position: relative;
+  overflow: hidden;
+  padding: 1.6rem;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 14px 32px rgba(23, 51, 32, 0.08);
+  animation: public-rise 0.62s ease both;
+}
+
+.info-card {
+  animation-delay: 0.08s;
+}
+
+.panel::before,
+.info-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 52%);
+  pointer-events: none;
+}
+
+.panel h2,
+.info-card h2 {
+  margin-top: 0;
+  color: #14532d;
+}
+
+.helper {
+  margin: 0 0 1rem;
+  color: #496257;
+  line-height: 1.6;
+}
+
+.form-feedback-stack {
+  display: grid;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.alert,
+.non-field-errors,
+.field-errors {
+  margin: 0 0 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 14px;
+  list-style: none;
+}
+
+.alert.success {
+  border: 1px solid #bbf7d0;
+  background: #ecfdf3;
+  color: #166534;
+}
+
+.non-field-errors,
+.field-errors {
+  border: 1px solid #fecdd3;
+  background: #fff1f2;
+  color: #b42318;
+  padding-left: 1.2rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.field-group.full {
+  grid-column: 1 / -1;
+}
+
+.field-group label {
+  color: #173320;
+  font-weight: 700;
+}
+
+.required-marker {
+  color: #b42318;
+}
+
+.form-control,
+.field-group input,
+.field-group select {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 1px solid #d9e3dd;
+  border-radius: 14px;
+  background: #fbfdfb;
+  font-size: 1rem;
+}
+
+.form-control:focus,
+.field-group input:focus,
+.field-group select:focus {
+  outline: none;
+  border-color: #1f8a47;
+  box-shadow: 0 0 0 4px rgba(31, 138, 71, 0.12);
+}
+
+.field-group.has-errors .form-control,
+.field-group.has-errors input,
+.field-group.has-errors select {
+  border-color: #f04438;
+  box-shadow: 0 0 0 4px rgba(240, 68, 56, 0.12);
+}
+
+.field-help {
+  margin: 0;
+  color: #5b6e64;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.field-errors {
+  margin-bottom: 0;
+}
+
+.submit-btn {
+  width: 100%;
+  margin-top: 1.2rem;
+  min-height: 54px;
+  padding: 1rem 1.2rem;
+  border: none;
+  border-radius: 999px;
+  background: #ffb300;
+  color: #173320;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(194, 65, 12, 0.12);
+  transition: background 0.18s, transform 0.18s, box-shadow 0.18s;
+}
+
+.submit-btn:hover,
+.submit-btn:focus {
+  transform: translateY(-1px);
+  background: #ff9800;
+  box-shadow: 0 14px 28px rgba(194, 65, 12, 0.16);
+}
+
+.info-list {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: #355344;
+  line-height: 1.8;
+}
+
+.info-list li + li {
+  margin-top: 0.75rem;
+}
+
+.info-card strong {
+  color: #14532d;
+}
+
+.booking-page .site-footer-default {
+  margin-top: 2.5rem;
+}
+
+@media (max-width: 900px) {
+  .booking-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+body {
+  background: linear-gradient(180deg, #fff8e1 0%, #fff7ed 100%);
+  color: #7c2d12;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  z-index: 0;
+  width: 22rem;
+  height: 22rem;
+  border-radius: 999px;
+  pointer-events: none;
+  filter: blur(16px);
+  opacity: 0.42;
+  animation: public-float 15s ease-in-out infinite;
+}
+
+body::before {
+  top: 5rem;
+  left: -8rem;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.25) 0%, rgba(251, 191, 36, 0) 72%);
+}
+
+body::after {
+  right: -7rem;
+  bottom: 6rem;
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.2) 0%, rgba(249, 115, 22, 0) 72%);
+  animation-delay: -6s;
+}
+
+.hero,
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-card {
+  background: linear-gradient(135deg, #9a3412, #ea580c);
+  box-shadow: 0 18px 40px rgba(194, 65, 12, 0.18);
+}
+
+.panel,
+.info-card {
+  box-shadow: 0 14px 32px rgba(194, 65, 12, 0.08);
+}
+
+.panel h2,
+.info-card h2,
+.info-card strong {
+  color: #9a3412;
+}
+
+.alert.success {
+  border-color: #fed7aa;
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.form-control:focus,
+.field-group input:focus,
+.field-group select:focus {
+  border-color: #ea580c;
+  box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.12);
+}
+
+@keyframes public-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes public-float {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, 16px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  body::after,
+  .hero-card,
+  .panel,
+  .info-card {
+    animation: none !important;
+  }
+
+  .submit-btn {
+    transition: none !important;
+  }
+}

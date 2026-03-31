@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - {{ site_brand_name }}</title>
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body>
+  <!-- Responsive Navigation Start -->
+  {% include "_marketing_nav.html" %}
+  <!-- Responsive Navigation End -->
+  <div class="dashboard-content marketing-page-offset">
+    {% include "_admin_posts.html" with admin_posts=admin_posts %}
+
+    <div class="contact-page">
+      <form
+        id="contactForm"
+        class="contact-form"
+        method="post"
+        data-contact-email="{{ site_support_email }}"
+        data-whatsapp-number="{{ site_whatsapp_number }}"
+        data-whatsapp-country-code="{{ site_whatsapp_country_code }}"
+      >
+        {% csrf_token %}
+        <h2 class="contact-form-title">Let's Plan Your Trip</h2>
+        <p class="admin-auth-helper">Send your details and choose the fastest way you want us to reply.</p>
+        {% if success or form.non_field_errors %}
+          <div class="form-feedback-stack">
+            {% if success %}
+              <div class="contact-form-success">Your inquiry has been received. We will reach out soon.</div>
+            {% endif %}
+            {% if form.non_field_errors %}
+              <ul class="contact-form-error-list">
+                {% for error in form.non_field_errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        {% endif %}
+        <div class="contact-form-field{% if form.full_name.errors %} has-errors{% endif %}">
+          <label for="{{ form.full_name.id_for_label }}" class="contact-form-label">Full Name</label>
+          {{ form.full_name }}
+          {% if form.full_name.errors %}
+            <ul class="contact-form-error-list">
+              {% for error in form.full_name.errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+        <div class="contact-form-field{% if form.email.errors %} has-errors{% endif %}">
+          <label for="{{ form.email.id_for_label }}" class="contact-form-label">Email Address</label>
+          {{ form.email }}
+          {% if form.email.errors %}
+            <ul class="contact-form-error-list">
+              {% for error in form.email.errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+        <div class="contact-form-field{% if form.phone.errors %} has-errors{% endif %}">
+          <label for="{{ form.phone.id_for_label }}" class="contact-form-label">Phone Number</label>
+          {{ form.phone }}
+          {% if form.phone.errors %}
+            <ul class="contact-form-error-list">
+              {% for error in form.phone.errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+        <div class="contact-form-field{% if form.message.errors %} has-errors{% endif %}">
+          <label for="{{ form.message.id_for_label }}" class="contact-form-label">Trip Details</label>
+          {{ form.message }}
+          {% if form.message.errors %}
+            <ul class="contact-form-error-list">
+              {% for error in form.message.errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+        <fieldset class="contact-form-channel-group{% if form.preferred_channel.errors %} has-errors{% endif %}">
+          <legend class="contact-form-label">Preferred Reply</legend>
+          <div class="contact-form-channel-options">
+            {{ form.preferred_channel }}
+          </div>
+          {% if form.preferred_channel.help_text %}
+            <p class="contact-form-help">{{ form.preferred_channel.help_text }}</p>
+          {% endif %}
+          {% if form.preferred_channel.errors %}
+            <ul class="contact-form-error-list">
+              {% for error in form.preferred_channel.errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </fieldset>
+        <div class="contact-form-actions">
+          <button type="submit" id="waBtn" name="preferred_channel" value="whatsapp" class="contact-form-button whatsapp">Chat on WhatsApp</button>
+          <button type="submit" id="emailBtn" name="preferred_channel" value="email" class="contact-form-button email">Send by Email</button>
+        </div>
+        <div id="formError" class="contact-form-error"></div>
+      </form>
+    </div>
+  </div>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  {% include "_site_footer.html" %}
+  <script src="{% static 'js/marketing-nav.js' %}"></script>
+  <script src="{% static 'js/contact.js' %}"></script>
+
+</body>
+</html>

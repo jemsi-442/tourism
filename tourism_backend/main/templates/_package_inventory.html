@@ -1,0 +1,15 @@
+{% if packages %}
+  <div class="packages-list">
+    {% for package in packages %}
+      <article class="package-card package-card-db">
+        {% if package.photo %}
+          <img src="{{ package.photo.url }}" alt="{{ package.name }}" class="zoomable-img">
+        {% endif %}
+        <div class="package-title">{{ package.name }}</div>
+        <p class="package-price">From {{ package.price }}</p>
+        <div class="package-desc">{{ package.description }}</div>
+        <a class="package-btn" href="{% url 'book' %}?package={{ package.id }}">Plan This Trip</a>
+      </article>
+    {% endfor %}
+  </div>
+{% endif %}

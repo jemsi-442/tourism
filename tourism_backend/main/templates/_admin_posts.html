@@ -1,0 +1,19 @@
+{% if admin_posts %}
+  <section style="{{ section_style|default:'margin:0 auto 2rem;' }}">
+    <div style="display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:center;align-items:stretch;">
+      {% for post in admin_posts %}
+        <article style="background:#fff;border-radius:18px;box-shadow:0 4px 18px rgba(0,0,0,0.12);padding:1.5rem;width:{{ card_width|default:'370px' }};max-width:98vw;">
+          {% if post.photo %}
+            <img
+              src="{{ post.photo.url }}"
+              alt="{{ post.title }}"
+              style="width:100%;height:{{ image_height|default:'220px' }};object-fit:cover;border-radius:12px;margin-bottom:1rem;box-shadow:0 4px 18px rgba(0,0,0,0.12);"
+            >
+          {% endif %}
+          <h3 style="color:#9a3412;font-size:1.35rem;font-weight:800;margin:0 0 0.8rem;text-align:center;word-break:break-word;">{{ post.title }}</h3>
+          <div style="font-size:1.05rem;color:#444;line-height:1.7;white-space:pre-line;">{{ post.description }}</div>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}

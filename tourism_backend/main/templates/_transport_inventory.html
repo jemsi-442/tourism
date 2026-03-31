@@ -1,0 +1,19 @@
+{% if transports %}
+  <section class="inventory-section">
+    <h2 class="inventory-title">Transport & Transfer Options</h2>
+    <div class="inventory-grid">
+      {% for transport in transports %}
+        <article class="inventory-card">
+          {% if transport.photo %}
+            <img src="{{ transport.photo.url }}" alt="{{ transport.name }}" class="inventory-image">
+          {% endif %}
+          <h3 class="inventory-name">{{ transport.name }}</h3>
+          <p class="inventory-meta"><strong>Type:</strong> {{ transport.type }}</p>
+          <p class="inventory-description">{{ transport.description }}</p>
+          <p class="inventory-price">From {{ transport.price_per_day }} per day</p>
+          <a href="{% url 'book' %}" class="inventory-cta">Book This Transport</a>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}

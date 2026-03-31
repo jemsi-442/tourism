@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create First Login</title>
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body class="admin-auth-page">
+  <div class="page-shell">
+    <div class="admin-auth-card">
+      <h2 class="admin-auth-title">Create First Login</h2>
+      <p class="admin-auth-helper">
+      {% if bootstrap_mode %}
+        This page is only available for creating the first login account.
+      {% else %}
+        Account setup is closed here. Please log in with an existing account.
+      {% endif %}
+      </p>
+
+      {% if messages or form.non_field_errors %}
+        <div class="form-feedback-stack">
+          {% if messages %}
+            <ul class="message-list">
+              {% for message in messages %}
+                <li>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+
+          {% if form.non_field_errors %}
+            <ul class="non-field-errors">
+              {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      <form class="admin-auth-form" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+          <div class="admin-auth-field{% if field.errors %} has-errors{% endif %}">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}
+              <p class="admin-auth-help">{{ field.help_text }}</p>
+            {% endif %}
+            {% if field.errors %}
+              <ul class="admin-auth-errors">
+                {% for error in field.errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        {% endfor %}
+
+        <button class="admin-auth-button" type="submit">Sign Up</button>
+        <a href="{% url 'admin_login' %}" class="admin-auth-link">Already have an account? Login</a>
+      </form>
+    </div>
+
+    {% include "_copyright_footer.html" %}
+  </div>
+</body>
+</html>

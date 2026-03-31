@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body class="admin-auth-page">
+  <div class="page-shell">
+    {% include "_admin_posts.html" with admin_posts=admin_posts %}
+
+    <div class="admin-auth-card">
+      <h2 class="admin-auth-title">Login</h2>
+      <p class="admin-auth-helper">Sign in to manage bookings, users, inventory, and content.</p>
+
+      {% if messages or form.non_field_errors %}
+        <div class="form-feedback-stack">
+          {% if messages %}
+            <ul class="message-list">
+              {% for message in messages %}
+                <li>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+
+          {% if form.non_field_errors %}
+            <ul class="non-field-errors">
+              {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      <form class="admin-auth-form" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+          <div class="admin-auth-field{% if field.errors %} has-errors{% endif %}">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+              <ul class="admin-auth-errors">
+                {% for error in field.errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        {% endfor %}
+
+        <button class="admin-auth-button" type="submit">Login</button>
+        {% if allow_signup %}
+          <a href="{% url 'admin_signup' %}" class="admin-auth-link">Set up the first account</a>
+        {% else %}
+          <p class="admin-auth-link admin-auth-note">Need access? Ask an existing administrator to create your login.</p>
+        {% endif %}
+      </form>
+    </div>
+
+    {% include "_copyright_footer.html" %}
+  </div>
+</body>
+</html>

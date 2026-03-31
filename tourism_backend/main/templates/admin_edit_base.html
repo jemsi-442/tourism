@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block page_title %}Admin Edit{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body class="admin-edit-page">
+  <div class="admin-edit-shell">
+    <header class="admin-edit-header">
+      <h1 class="admin-edit-title">{% block edit_title %}Edit{% endblock %}</h1>
+      <p class="admin-edit-subtitle">{% block edit_subtitle %}{% endblock %}</p>
+    </header>
+
+    <nav class="admin-edit-nav">
+      <a class="admin-hero-link" href="{% url 'home' %}">View site</a>
+      <a class="admin-hero-link" href="{% url 'admin_dashboard' %}">Dashboard</a>
+      <form method="post" action="{% url 'admin_logout' %}" class="admin-hero-form">
+        {% csrf_token %}
+        <button class="admin-hero-link accent" type="submit">Logout</button>
+      </form>
+    </nav>
+
+    {% if messages %}
+      <ul class="message-list">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <section class="admin-edit-card">
+      <form class="admin-form-card" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% include "_admin_form_fields.html" with form=form %}
+        <div class="admin-edit-actions">
+          <button class="admin-primary-btn" type="submit">{% block submit_label %}Save{% endblock %}</button>
+          <a class="admin-secondary-btn" href="{% url 'admin_dashboard' %}">Return to dashboard</a>
+        </div>
+      </form>
+    </section>
+
+    {% include "_copyright_footer.html" %}
+  </div>
+</body>
+</html>

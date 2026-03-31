@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - {{ site_brand_name }}</title>
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+  <body>
+  <!-- Responsive Navigation Start -->
+  {% include "_marketing_nav.html" %}
+  <!-- Responsive Navigation End -->
+    <div class="dashboard-content marketing-page-offset about-us-page-shell">
+      {% include "_admin_posts.html" with admin_posts=admin_posts %}
+      <div class="marketing-panel marketing-panel-soft about-us-panel">
+        <h1 class="marketing-panel-title">About {{ site_brand_name }}</h1>
+        <p class="marketing-copy lead"><strong>Welcome to {{ site_brand_name }}, where every journey begins with local care.</strong></p>
+        <p class="marketing-copy">At {{ site_brand_name }}, we plan meaningful travel experiences across Tanzania and Zanzibar with thoughtful service, warm hospitality, and a strong understanding of the places we call home.</p>
+        <h2 class="marketing-section-title">Our Story</h2>
+        <p class="marketing-copy">Founded by Tanzanians with hands-on travel experience, {{ site_brand_name }} was built to make East African travel feel smooth, welcoming, and personal. From your first message to your final day on the trip, we focus on clear planning, trusted local guidance, and experiences that stay with you long after you return home.</p>
+        <h2 class="marketing-section-title">What We Help You Experience</h2>
+        <ul class="marketing-list">
+          <li><strong>The Great Wildebeest Migration:</strong> Witness the greatest show on earth in the vast plains of the Serengeti.</li>
+          <li><strong>The Roof of Africa:</strong> Stand in awe of the snow-capped summit of Mount Kilimanjaro.</li>
+          <li><strong>The Cradle of Mankind:</strong> Explore the archaeological wonders of the Ngorongoro Crater.</li>
+          <li><strong>Island Paradise:</strong> Unwind on the pristine, white-sand beaches of Zanzibar and dive into its vibrant coral reefs.</li>
+          <li><strong>Cultural Immersion:</strong> Connect with local communities and experience the warm hospitality of the Maasai people and the rhythmic pulse of Swahili culture.</li>
+        </ul>
+        <h2 class="marketing-section-title">What We Value</h2>
+        <ol class="marketing-list">
+          <li><strong>Expertise & Safety:</strong> Our guides are certified professionals with unparalleled knowledge and a commitment to your safety and comfort.</li>
+          <li><strong>Sustainable & Responsible Tourism:</strong> We operate on eco-friendly principles and ensure our tours give back to the land and its people.</li>
+          <li><strong>Personalized Service:</strong> We create tailor-made itineraries perfect for your unique dreams.</li>
+          <li><strong>Uncompromising Quality:</strong> We partner with the best lodges, camps, and transportation providers for your comfort and enjoyment.</li>
+        </ol>
+        <h2 class="marketing-section-title">Why Travel With Us</h2>
+        <ul class="marketing-list">
+          <li><strong>Local Knowledge:</strong> As a Tanzania-based operator, we offer authenticity and deep insight.</li>
+          <li><strong>24/7 Support:</strong> Our dedicated team is with you every step of the way.</li>
+          <li><strong>Seamless Planning:</strong> We handle all the details so you can focus on the experience.</li>
+        </ul>
+        <p class="marketing-copy">We would love to help you discover Tanzania and Zanzibar through wildlife, culture, coastlines, and the everyday beauty of East Africa.</p>
+        <h2 class="marketing-section-title center">Karibu Tanzania</h2>
+        <h3 class="marketing-section-subtitle">{{ site_brand_name }} - We are proud to show you our home.</h3>
+
+        <!-- Meet Our Team Section -->
+        <div class="team-section">
+          <h2 class="marketing-section-title center">Meet Our Team</h2>
+          <div class="card-grid">
+            <div class="profile-card">
+              <img src="{% static 'photos/1754142180186.jpg' %}" alt="Guide John" class="profile-avatar">
+              <h4 class="profile-name">John Mwinyi</h4>
+              <p class="profile-role">Lead Safari Guide<br>15+ years experience</p>
+            </div>
+            <div class="profile-card">
+              <img src="{% static 'photos/1754142197964.jpg' %}" alt="Manager Fatma" class="profile-avatar">
+              <h4 class="profile-name">Fatma Salim</h4>
+              <p class="profile-role">Operations Manager<br>Expert in Zanzibar tours</p>
+            </div>
+            <div class="profile-card">
+              <img src="{% static 'photos/1754142206047.jpg' %}" alt="Guide Peter" class="profile-avatar">
+              <h4 class="profile-name">Peter Mussa</h4>
+              <p class="profile-role">Wildlife Specialist<br>Serengeti & Ngorongoro</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonials Section -->
+        <div class="testimonial-section">
+          <h2 class="marketing-section-title center">What Our Guests Say</h2>
+          <div class="card-grid">
+            <div class="testimonial-card">
+              <p class="testimonial-quote">“{{ site_brand_name }} made our honeymoon unforgettable! The guides were knowledgeable and the itinerary was perfect.”</p>
+              <span class="testimonial-author">– Emily & Raj, UK</span>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-quote">“We saw the Great Migration and met the Maasai. Truly a life-changing experience!”</p>
+              <span class="testimonial-author">– Thomas, Germany</span>
+            </div>
+            <div class="testimonial-card">
+              <p class="testimonial-quote">“Fatma arranged everything for our family. The kids loved Zanzibar’s beaches!”</p>
+              <span class="testimonial-author">– Aisha, UAE</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="marketing-cta">
+          <h2 class="marketing-section-title center">Ready to plan your journey?</h2>
+          <a href="{% url 'contact' %}" class="marketing-cta-button">Talk to Us</a>
+        </div>
+      </div>
+
+  </div>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  {% include "_site_footer.html" %}
+  <script src="{% static 'js/marketing-nav.js' %}"></script>
+
+</body>
+</html>

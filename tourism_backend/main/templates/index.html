@@ -1,0 +1,181 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Welcome to {{ site_brand_name }}</title>
+	<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+	<link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+<body class="landing-page">
+	<div class="landing-topbar">
+		<div class="landing-topbar-inner">
+			<button class="landing-menu-toggle" type="button" aria-expanded="false" aria-controls="landing-menu" aria-label="Open menu">
+				<span class="landing-menu-bars">
+					<span></span>
+					<span></span>
+					<span></span>
+				</span>
+				<span class="landing-menu-label">Menu</span>
+			</button>
+			<a class="open-auth-btn" href="{% url 'admin_login' %}">Login</a>
+		</div>
+	</div>
+	<nav id="landing-menu" class="landing-menu-panel" aria-hidden="true">
+		<a href="{% url 'home' %}">Home</a>
+		<a href="{% url 'aboutus' %}">About Us</a>
+		<a href="{% url 'aboutzanzibar' %}">About Zanzibar</a>
+		<a href="{% url 'packages' %}">Packages</a>
+		<a href="{% url 'safari' %}">Safari</a>
+		<a href="{% url 'hotel' %}">Hotel</a>
+		<a href="{% url 'transport' %}">Transport</a>
+		<a href="{% url 'gallery' %}">Gallery</a>
+		<a href="{% url 'book' %}">Book</a>
+		<a href="{% url 'contact' %}">Contact</a>
+	</nav>
+	<div id="main-content">
+	<div class="slideshow-bg">
+		<img src="{% static 'photos/House of Wonders (Beit el-Ajaib).jpg' %}" class="slide active" alt="House of Wonders">
+		<img src="{% static 'photos/Forodhani Gardens Night Market1.jpg' %}" class="slide" alt="Forodhani Gardens Night Market">
+		<img src="{% static 'photos/Nungwi Beach.jpg' %}" class="slide" alt="Nungwi Beach">
+		<img src="{% static 'photos/kendwa 1.jpg' %}" class="slide" alt="Kendwa Beach">
+		<img src="{% static 'photos/IMG_20250215_135041.jpg' %}" class="slide" alt="Jozani Forest">
+		<img src="{% static 'photos/Dhow Sunset Cruise1.jpg' %}" class="slide" alt="Dhow Sunset Cruise">
+		<img src="{% static 'photos/The Rock Restaurant.jpg' %}" class="slide" alt="The Rock Restaurant">
+		<img src="{% static 'photos/flamingo.jpg' %}" class="slide" alt="Wildlife Flamingo">
+	</div>
+	<div class="overlay"></div>
+	<!-- Hero Section -->
+	<section class="hero">
+		<h1>Welcome to {{ site_brand_name }}</h1>
+		<p>{{ site_tagline }}<br>
+		Discover beach escapes, culture tours, and wildlife adventures planned with local care from start to finish.</p>
+		<button class="explore-btn" onclick="scrollToExplore()">Explore Tours</button>
+	</section>
+	{% include '_admin_posts.html' with section_style='position:relative;z-index:2;max-width:1200px;margin:0 auto 2rem;padding:0 1.5rem;' card_width='360px' image_height='220px' %}
+
+	<!-- Gallery Section -->
+	<section id="gallery" class="landing-gallery-section">
+		<div class="landing-gallery-inner">
+			<h2 class="landing-gallery-title">Popular Places to Explore</h2>
+			<div class="filter-buttons">
+				<button class="filter-btn active" data-filter="all">All</button>
+				<button class="filter-btn" data-filter="history">History & Culture</button>
+				<button class="filter-btn" data-filter="beach">Beaches</button>
+				<button class="filter-btn" data-filter="nature">Wildlife & Nature</button>
+				<button class="filter-btn" data-filter="unique">Unique Experiences</button>
+			</div>
+			<div class="cards">
+				<!-- Category 1: History, Culture & Stone Town -->
+				<div class="card" data-category="history">
+					<img src="{% static 'photos/House of Wonders (Beit el-Ajaib).jpg' %}" alt="House of Wonders" />
+					<div class="card-info">
+						<h3>House of Wonders</h3>
+						<p>A Stone Town landmark known for its bold architecture and rich island history.</p>
+					</div>
+				</div>
+				<div class="card" data-category="history">
+					<img src="{% static 'photos/Forodhani Gardens Night Market1.jpg' %}" alt="Forodhani Gardens Night Market" />
+					<div class="card-info">
+						<h3>Forodhani Gardens Night Market</h3>
+						<p>An evening food market filled with seafood, street snacks, and oceanfront energy.</p>
+					</div>
+				</div>
+				<div class="card" data-category="history">
+					<img src="{% static 'photos/House of Wonders (Beit el-Ajaib)2.jpg' %}" alt="Stone Town" />
+					<div class="card-info">
+						<h3>Stone Town</h3>
+						<p>Walk winding streets, carved doors, and centuries of Swahili history.</p>
+					</div>
+				</div>
+				<div class="card" data-category="history">
+					<img src="{% static 'photos/House of Wonders (Beit el-Ajaib)1.jpg' %}" alt="Old Fort" />
+					<div class="card-info">
+						<h3>Old Fort (Ngome Kongwe)</h3>
+						<p>A historic fort that now hosts local events, crafts, and performances.</p>
+					</div>
+				</div>
+				<div class="card" data-category="history">
+					<img src="{% static 'photos/IMG_20250215_135041.jpg' %}" alt="Spice Farm" />
+					<div class="card-info">
+						<h3>Spice Farms</h3>
+						<p>Smell and taste the spices that helped make Zanzibar famous.</p>
+					</div>
+				</div>
+				<!-- Category 2: Beaches & Relaxation -->
+						<div class="card" data-category="beach">
+							<img src="{% static 'photos/nungwi 1.jpg' %}" alt="Nungwi Beach" />
+							<div class="card-info">
+								<h3>Nungwi Beach</h3>
+								<p>Clear water, soft sand, and a lively beach atmosphere.</p>
+							</div>
+						</div>
+				<div class="card" data-category="beach">
+					<img src="{% static 'photos/kendwa 1.jpg' %}" alt="Kendwa Beach" />
+					<div class="card-info">
+						<h3>Kendwa Beach</h3>
+						<p>A calm beach known for sunsets and relaxed seaside evenings.</p>
+					</div>
+				</div>
+				<div class="card" data-category="beach">
+					<img src="{% static 'photos/download (2).jpg' %}" alt="Paje Beach" />
+					<div class="card-info">
+						<h3>Paje Beach</h3>
+						<p>A long white-sand beach loved for kite surfing and laid-back coastal life.</p>
+					</div>
+				</div>
+				<!-- Category 3: Wildlife & Nature -->
+				<div class="card" data-category="nature">
+					<img src="{% static 'photos/IMG_20250215_135044.jpg' %}" alt="Jozani Forest" />
+					<div class="card-info">
+						<h3>Jozani Forest</h3>
+						<p>A lush forest where you can spot the Zanzibar red colobus monkey.</p>
+					</div>
+				</div>
+				<div class="card" data-category="nature">
+					<img src="{% static 'photos/IMG_20250215_135216.jpg' %}" alt="Prison Island" />
+					<div class="card-info">
+						<h3>Prison Island (Changuu)</h3>
+						<p>Visit giant tortoises and enjoy a short boat trip from Stone Town.</p>
+					</div>
+				</div>
+				<div class="card" data-category="nature">
+					<img src="{% static 'photos/flamingo.jpg' %}" alt="Mnemba Atoll" />
+					<div class="card-info">
+						<h3>Mnemba Atoll</h3>
+						<p>A top spot for snorkeling, coral reefs, and bright turquoise water.</p>
+					</div>
+				</div>
+				<div class="card" data-category="nature">
+					<img src="{% static 'photos/download (1).jpg' %}" alt="Kizimkazi Village" />
+					<div class="card-info">
+						<h3>Kizimkazi Village</h3>
+						<p>A coastal village known for dolphin tours and quiet ocean views.</p>
+					</div>
+				</div>
+				<!-- Category 4: Unique Experiences & Icons -->
+				<div class="card" data-category="unique">
+					<img src="{% static 'photos/The Rock Restaurant.jpg' %}" alt="The Rock Restaurant" />
+					<div class="card-info">
+						<h3>The Rock Restaurant</h3>
+						<p>A famous dining spot set on a rock above the Indian Ocean.</p>
+					</div>
+				</div>
+				<div class="card" data-category="unique">
+					<img src="{% static 'photos/Dhow Sunset Cruise1.jpg' %}" alt="Dhow Sunset Cruise" />
+					<div class="card-info">
+						<h3>Dhow Sunset Cruise</h3>
+						<p>Sail into sunset on a traditional wooden dhow with wide ocean views.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	{% include "_site_footer.html" %}
+
+	<script src="{% static 'js/index.js' %}"></script>
+	</div> <!-- end main-content -->
+</body>
+</html>

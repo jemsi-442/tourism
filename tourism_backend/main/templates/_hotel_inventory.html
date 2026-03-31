@@ -1,0 +1,19 @@
+{% if hotels %}
+  <section class="inventory-section">
+    <h2 class="inventory-title">Featured Hotels & Stays</h2>
+    <div class="inventory-grid">
+      {% for hotel in hotels %}
+        <article class="inventory-card">
+          {% if hotel.photo %}
+            <img src="{{ hotel.photo.url }}" alt="{{ hotel.name }}" class="inventory-image">
+          {% endif %}
+          <h3 class="inventory-name">{{ hotel.name }}</h3>
+          <p class="inventory-meta"><strong>Location:</strong> {{ hotel.location }}</p>
+          <p class="inventory-description">{{ hotel.description }}</p>
+          <p class="inventory-price">From {{ hotel.price_per_night }} per night</p>
+          <a href="{% url 'book' %}" class="inventory-cta">Book This Stay</a>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}

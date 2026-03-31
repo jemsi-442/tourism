@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - {{ site_brand_name }}</title>
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body class="home-page">
+  <!-- Responsive Navigation Start -->
+  {% include "_marketing_nav.html" %}
+  <!-- Responsive Navigation End -->
+  <div class="dashboard-content home-dashboard-content" data-photo-base="{% static 'photos/' %}">
+    <!-- Slideshow Background -->
+    <div id="slideshow-bg" class="home-slideshow-bg">
+      <img src="{% static 'photos/wildebeest-best-picture.jpg' %}" class="slide home-slide active" alt="Wildebeest Migration" />
+      <img src="{% static 'photos/kendwa 1.jpg' %}" class="slide home-slide" alt="Kendwa Beach" />
+    </div>
+    <!-- Overlay for opacity -->
+    <div class="home-overlay"></div>
+    <div class="dash-section home-hero-panel">
+      {% include '_admin_posts.html' with section_style='margin:0 0 2rem;' card_width='100%' image_height='220px' %}
+      <h1 class="home-hero-title">Welcome to {{ site_brand_name }}</h1>
+      <p class="home-hero-copy">
+        From wildlife safaris to island escapes, we help you experience Tanzania and Zanzibar with local guidance, smooth planning, and memorable moments from start to finish.<br><br>
+        Travel with confidence while we handle the details that make your journey feel easy, personal, and unforgettable.
+      </p>
+      <h2 class="home-hero-subtitle">Choose Your Next Adventure.</h2>
+    </div>
+    <!-- Attractions Section Start -->
+    <div class="attractions-section home-attractions-panel">
+      <h2 class="home-attractions-title">Discover Tanzania & Zanzibar</h2>
+      <div class="attraction-filters home-attraction-filters">
+        <button class="filter-btn home-filter-btn active" data-group="all">All</button>
+        <button class="filter-btn home-filter-btn" data-group="Wildlife">Wildlife Safari</button>
+        <button class="filter-btn home-filter-btn" data-group="Mountains">Mountains & Hiking</button>
+        <button class="filter-btn home-filter-btn" data-group="Culture">Culture & History</button>
+        <button class="filter-btn home-filter-btn" data-group="Beaches">Beaches & Islands</button>
+      </div>
+      <div id="attractions-list" class="attractions-list home-attractions-list"></div>
+    </div>
+    <!-- Gallery Modal -->
+    <div id="gallery-modal" class="gallery-modal home-gallery-modal">
+      <div class="gallery-content home-gallery-content">
+        <span id="close-gallery" class="home-gallery-close">&times;</span>
+        <div id="gallery-images" class="home-gallery-images"></div>
+      </div>
+    </div>
+    <!-- Image Zoom Modal (Reusable for all images) -->
+    <div id="img-zoom-modal" class="home-zoom-modal">
+      <span id="img-zoom-close" class="home-zoom-close">&times;</span>
+      <img id="img-zoomed" src="" alt="Zoomed" class="home-zoom-image">
+    </div>
+  </div>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  {% include "_site_footer.html" %}
+  <script src="{% static 'js/marketing-nav.js' %}"></script>
+  <script src="{% static 'js/home-attractions-data.js' %}"></script>
+  <script src="{% static 'js/home.js' %}"></script>
+</body>
+</html>

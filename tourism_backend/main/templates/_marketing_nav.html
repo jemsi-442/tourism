@@ -1,0 +1,48 @@
+{% load static %}
+<nav class="responsive-navbar">
+  <div class="navbar-container">
+    <div class="navbar-primary">
+      <div class="navbar-left">
+        <div class="navbar-logo">
+          <img src="{% static 'photos/download.jpg' %}" alt="Company Logo" class="navbar-logo-img">
+        </div>
+        <button class="navbar-toggle" aria-label="Toggle menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+      <div class="navbar-auth">
+        {% if user.is_authenticated and user.is_staff %}
+          <form method="post" action="{% url 'admin_logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="navbar-link-button navbar-auth-link">Logout</button>
+          </form>
+        {% else %}
+          <a href="{% url 'admin_login' %}" class="navbar-auth-link">Login</a>
+        {% endif %}
+      </div>
+    </div>
+    <ul class="navbar-menu">
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'aboutus' %}">About Us</a></li>
+      <li><a href="{% url 'aboutzanzibar' %}">About Zanzibar</a></li>
+      <li><a href="{% url 'packages' %}">Packages</a></li>
+      <li><a href="{% url 'safari' %}">Safari</a></li>
+      <li><a href="{% url 'gallery' %}">Gallery</a></li>
+      <li><a href="{% url 'transport' %}">Transport</a></li>
+      <li><a href="{% url 'hotel' %}">Hotel</a></li>
+      <li><a href="{% url 'book' %}">Book</a></li>
+      <li><a href="{% url 'contact' %}">Contact</a></li>
+      <li class="navbar-auth-mobile-item">
+        {% if user.is_authenticated and user.is_staff %}
+          <form method="post" action="{% url 'admin_logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="navbar-link-button">Logout</button>
+          </form>
+        {% else %}
+          <a href="{% url 'admin_login' %}">Login</a>
+        {% endif %}
+      </li>
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery - {{ site_brand_name }}</title>
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body>
+  <!-- Responsive Navigation Start -->
+  {% include "_marketing_nav.html" %}
+  <!-- Responsive Navigation End -->
+
+  <div class="dashboard-content marketing-page-offset gallery-page-shell">
+    {% include "_admin_posts.html" with admin_posts=admin_posts card_width='520px' image_height='340px' section_style='margin:0 auto 2rem;padding-top:1rem;' %}
+
+    <div class="dash-section gallery-intro">Browse moments from our tours, safaris, and island experiences.</div>
+    <section class="photo-gallery gallery-section">
+      <h2 class="gallery-title">Tour Gallery</h2>
+      <div class="gallery-grid">
+  <img src="{% static 'photos/01a9b92cad73bd44415b2ae7228892e3.jpg' %}" alt="Gallery Photo 1" class="zoomable-photo gallery-photo" />
+  <img src="{% static 'photos/0c01917b25a0d517a113221b8b618bdc.jpg' %}" alt="Gallery Photo 2" class="zoomable-photo gallery-photo" />
+  <img src="{% static 'photos/1000026398.jpg' %}" alt="Gallery Photo 3" class="zoomable-photo gallery-photo" />
+  <img src="{% static 'photos/1754141823866.jpg' %}" alt="Gallery Photo 4" class="zoomable-photo gallery-photo" />
+  <img src="{% static 'photos/1754142180186.jpg' %}" alt="Gallery Photo 5" class="zoomable-photo gallery-photo" />
+  <img src="{% static 'photos/1754142185126.jpg' %}" alt="Gallery Photo 6" class="zoomable-photo gallery-photo" />
+  <img src="{% static 'photos/1754142197964.jpg' %}" alt="Gallery Photo 7" class="zoomable-photo gallery-photo" />
+  <img src="{% static 'photos/1754142206047.jpg' %}" alt="Gallery Photo 8" class="zoomable-photo gallery-photo" />
+  <img src="{% static 'photos/1754142211114.jpg' %}" alt="Gallery Photo 9" class="zoomable-photo gallery-photo" />
+  <img src="{% static 'photos/1754142346358.jpg' %}" alt="Gallery Photo 10" class="zoomable-photo gallery-photo" />
+  <img src="{% static 'photos/1754198753329.jpg' %}" alt="Gallery Photo 11" class="zoomable-photo gallery-photo" />
+  <img src="{% static 'photos/1754198755310.jpg' %}" alt="Gallery Photo 12" class="zoomable-photo gallery-photo" />
+  <img src="{% static 'photos/1754198757547.jpg' %}" alt="Gallery Photo 13" class="zoomable-photo gallery-photo" />
+  <img src="{% static 'photos/1754198759827.jpg' %}" alt="Gallery Photo 14" class="zoomable-photo gallery-photo" />
+  <img src="{% static 'photos/1754198765210.jpg' %}" alt="Gallery Photo 15" class="zoomable-photo gallery-photo" />
+  <img src="{% static 'photos/1754198960075.jpg' %}" alt="Gallery Photo 16" class="zoomable-photo gallery-photo" />
+  <img src="{% static 'photos/1754198961944.jpg' %}" alt="Gallery Photo 17" class="zoomable-photo gallery-photo" />
+  <img src="{% static 'photos/1754198963880.jpg' %}" alt="Gallery Photo 18" class="zoomable-photo gallery-photo" />
+  <img src="{% static 'photos/1754198965976.jpg' %}" alt="Gallery Photo 19" class="zoomable-photo gallery-photo" />
+  <img src="{% static 'photos/1754198968261.jpg' %}" alt="Gallery Photo 20" class="zoomable-photo gallery-photo" />
+      </div>
+      <div id="gallery-modal-bg" class="gallery-modal-bg">
+        <button class="gallery-modal-close">&times;</button>
+        <img id="gallery-modal-img" class="gallery-modal-img" src="" alt="Zoomed Photo" />
+      </div>
+    </section>
+  </div>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  {% include "_site_footer.html" %}
+  <script src="{% static 'js/marketing-nav.js' %}"></script>
+  <script src="{% static 'js/gallery.js' %}"></script>
+
+</body>
+</html>

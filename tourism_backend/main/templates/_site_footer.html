@@ -1,0 +1,41 @@
+<footer class="safari-footer site-footer-default">
+  <div class="footer-bg"></div>
+  <div class="footer-content">
+    <div class="footer-col company-info">
+      <h3>{{ site_brand_name }}</h3>
+      <p class="tagline">{{ site_tagline }}</p>
+      <p class="naac">Locally guided travel experiences with a personal touch.</p>
+    </div>
+    <div class="footer-col quick-links">
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'aboutus' %}">About Us</a></li>
+        <li><a href="{% url 'packages' %}">Safari Packages</a></li>
+        <li><a href="{% url 'book' %}">Book Your Trip</a></li>
+        <li><a href="{% url 'contact' %}">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col destinations">
+      <h4>Popular Destinations</h4>
+      <ul>
+        <li>Serengeti</li>
+        <li>Ngorongoro</li>
+        <li>Zanzibar</li>
+        <li>Kilimanjaro</li>
+        <li>Tarangire</li>
+      </ul>
+    </div>
+    <div class="footer-col contact-info">
+      <h4>Get In Touch</h4>
+      <ul>
+        <li><i class="fas fa-phone"></i> {{ site_phone_display }}</li>
+        <li><i class="fas fa-envelope"></i> {{ site_support_email }}</li>
+        <li><i class="fas fa-map-marker-alt"></i> {{ site_location }}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bar">
+    © 2026 {{ site_brand_name }}. All rights reserved.
+  </div>
+</footer>

@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Safari Packages - {{ site_brand_name }}</title>
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+  <link rel="stylesheet" href="{% static 'css/packages.css' %}">
+</head>
+<body class="packages-page">
+  <!-- Responsive Navigation Start -->
+  {% include "_marketing_nav.html" %}
+  <!-- Responsive Navigation End -->
+
+  <div class="packages-container marketing-page-offset">
+    <h1 class="packages-title">Safari Packages</h1>
+    {% include "_admin_posts.html" with admin_posts=admin_posts %}
+    {% include "_package_inventory.html" with packages=packages %}
+    {% if not packages %}
+    <div class="packages-list">
+      <div class="package-card">
+        <img src="{% static 'photos/1754198755310.jpg' %}" alt="Serengeti Migration" class="zoomable-img" />
+        <div class="package-title">Serengeti Migration Adventure</div>
+        <div class="package-desc">Experience the world-famous Great Migration with luxury tented camps and expert guides. Includes game drives, balloon safari, and all meals.</div>
+        <a class="package-btn" href="{% url 'book' %}">Plan This Trip</a>
+      </div>
+      <div class="package-card">
+        <img src="{% static 'photos/1754142346358.jpg' %}" alt="Ngorongoro Crater" class="zoomable-img" />
+        <div class="package-title">Ngorongoro Crater Safari</div>
+        <div class="package-desc">Descend into the breathtaking Ngorongoro Crater for Big Five viewing. Stay at a luxury lodge with panoramic views and enjoy cultural visits.</div>
+        <a class="package-btn" href="{% url 'book' %}">Plan This Trip</a>
+      </div>
+      <div class="package-card">
+        <img src="{% static 'photos/1754142211114.jpg' %}" alt="Kilimanjaro Trek" class="zoomable-img" />
+        <div class="package-title">Mount Kilimanjaro Trek</div>
+        <div class="package-desc">Climb Africa’s highest peak with professional guides, all park fees, and full support. Choose your route and enjoy a celebration dinner after your summit.</div>
+        <a class="package-btn" href="{% url 'book' %}">Plan This Trip</a>
+      </div>
+      <div class="package-card">
+        <img src="{% static 'photos/1754142206047.jpg' %}" alt="Tarangire Elephants" class="zoomable-img" />
+        <div class="package-title">Tarangire Elephant Safari</div>
+        <div class="package-desc">See massive herds of elephants and ancient baobab trees. Enjoy relaxed game drives and a sundowner experience in Tarangire National Park.</div>
+        <a class="package-btn" href="{% url 'book' %}">Plan This Trip</a>
+      </div>
+      <div class="package-card">
+        <img src="{% static 'photos/1754142185126.jpg' %}" alt="Selous Boat Safari" class="zoomable-img" />
+        <div class="package-title">Selous Boat & Bush Safari</div>
+        <div class="package-desc">Explore the wild Selous (Nyerere) by boat and classic game drives. Stay in remote bush camps and enjoy walking safaris along the Rufiji River.</div>
+        <a class="package-btn" href="{% url 'book' %}">Plan This Trip</a>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- Image Zoom Modal -->
+  <div id="img-zoom-modal" class="packages-zoom-modal">
+    <span id="img-zoom-close" class="packages-zoom-close">&times;</span>
+    <img id="img-zoomed" class="packages-zoom-image" src="" alt="Zoomed">
+  </div>
+
+  {% include "_site_footer.html" %}
+  <script src="{% static 'js/marketing-nav.js' %}"></script>
+  <script src="{% static 'js/packages.js' %}"></script>
+</body>
+</html>

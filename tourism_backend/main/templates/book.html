@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking - {{ site_brand_name }}</title>
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+  <link rel="stylesheet" href="{% static 'css/book.css' %}">
+</head>
+<body class="booking-page">
+  {% include "_marketing_nav.html" %}
+
+  <section class="hero marketing-page-offset">
+    <div class="hero-card">
+      <h1>Book Your Tourism Experience</h1>
+      <p>
+        Plan your trip with us in one place. Choose the services you need,
+        submit your request, and our team will follow up with availability and
+        next steps.
+      </p>
+    </div>
+  </section>
+
+  <main class="content">
+    {% include "_admin_posts.html" with admin_posts=admin_posts %}
+
+    <div class="booking-shell">
+      <section class="panel">
+        <h2>Booking Form</h2>
+        <p class="helper">Fill in your details below. You can choose a package, hotel, safari, transport, or combine them to match your trip.</p>
+
+        {% if success or form.non_field_errors %}
+          <div class="form-feedback-stack">
+            {% if success %}
+              <div class="alert success">Your booking request has been sent successfully. We will contact you shortly.</div>
+            {% endif %}
+
+            {% if form.non_field_errors %}
+              <ul class="non-field-errors">
+                {% for error in form.non_field_errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        <form method="post" class="booking-form" novalidate>
+          {% csrf_token %}
+          <div class="form-grid">
+            {% for field in form %}
+              <div class="field-group{% if field.name == 'package' or field.name == 'hotel' or field.name == 'safari' or field.name == 'transport' %} full{% endif %}{% if field.errors %} has-errors{% endif %}">
+                <label for="{{ field.id_for_label }}">
+                  {{ field.label }}
+                  {% if field.field.required %}
+                    <span class="required-marker">*</span>
+                  {% endif %}
+                </label>
+                {{ field }}
+                {% if field.help_text %}
+                  <p class="field-help">{{ field.help_text }}</p>
+                {% endif %}
+                {% if field.errors %}
+                  <ul class="field-errors">
+                    {% for error in field.errors %}
+                      <li>{{ error }}</li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+          <button class="submit-btn" type="submit">Submit Booking</button>
+        </form>
+      </section>
+
+      <aside class="info-card">
+        <h2>Why Book With Us</h2>
+        <ul class="info-list">
+          <li><strong>Flexible planning:</strong> choose one service or combine several in a single request.</li>
+          <li><strong>Fast follow-up:</strong> your request is saved immediately so our team can respond quickly.</li>
+          <li><strong>Clear booking flow:</strong> travel date and service choices are checked before submission.</li>
+          <li><strong>Personal support:</strong> once you send your request, we help you confirm the best option for your trip.</li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+
+  {% include "_site_footer.html" %}
+  <script src="{% static 'js/marketing-nav.js' %}"></script>
+</body>
+</html>

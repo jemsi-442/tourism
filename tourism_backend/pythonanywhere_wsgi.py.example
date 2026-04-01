@@ -1,0 +1,18 @@
+import os
+import sys
+
+
+USERNAME = "yourusername"
+PROJECT_ROOT = f"/home/{USERNAME}/tourism"
+DJANGO_PROJECT_ROOT = f"{PROJECT_ROOT}/tourism_backend"
+
+if DJANGO_PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, DJANGO_PROJECT_ROOT)
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tourism_backend.settings")
+os.environ.setdefault("DJANGO_ENV", "production")
+os.environ.setdefault("DJANGO_DEBUG", "False")
+
+from django.core.wsgi import get_wsgi_application
+
+application = get_wsgi_application()

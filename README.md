@@ -46,6 +46,7 @@ cd tourism_backend
 python3 manage.py migrate
 python3 manage.py check
 python3 manage.py test
+python3 manage.py collectstatic --noinput
 ```
 
 ## Notes
@@ -55,3 +56,32 @@ python3 manage.py test
 - Python cache files are ignored.
 - Static photos are ignored from git tracking.
 - Copy values from `tourism_backend/.env.example` into your deployment environment before going live.
+
+## PythonAnywhere
+
+This project can be deployed on PythonAnywhere without Docker.
+
+### Recommended setup
+
+1. Clone the repo on PythonAnywhere
+2. Create a virtualenv and install dependencies
+3. Set environment values for:
+   - `DJANGO_ENV=production`
+   - `DJANGO_DEBUG=False`
+   - `DJANGO_SECRET_KEY`
+   - `DJANGO_ALLOWED_HOSTS`
+   - `DJANGO_CSRF_TRUSTED_ORIGINS`
+4. Run:
+
+```bash
+cd ~/tourism/tourism_backend
+python3 manage.py migrate
+python3 manage.py collectstatic --noinput
+```
+
+5. In the PythonAnywhere Web tab:
+   - point the WSGI file to this project
+   - map `/static/` to `/home/yourusername/tourism/tourism_backend/staticfiles`
+   - map `/media/` to `/home/yourusername/tourism/tourism_backend/media`
+
+Use the example file at `tourism_backend/pythonanywhere_wsgi.py.example` as a starting point for your WSGI config.

@@ -6,6 +6,7 @@ __pycache__/
 !.env.example
 media/
 main/static/photos/
+staticfiles/
 venv/
 .venv/
 dist/

@@ -4,4 +4,5 @@ __pycache__/
 media/
 static/photos/
 tourism_backend/main/static/photos/
+tourism_backend/staticfiles/
 .env

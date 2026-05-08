@@ -2,6 +2,7 @@
 Django settings for tourism_backend project.
 """
 
+
 import os
 from pathlib import Path
 from django.core.exceptions import ImproperlyConfigured
